@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  app:
+    container_name: backend
+    image: {{ env.IMAGE_URL }}
+    environment:
+      DATABASE_URL: {{ env.DATABASE_URL }}
+      EXPO_ACCESS_TOKEN: {{ env.EXPO_ACCESS_TOKEN }}
+      PORT: {{ env.PORT }}
+      JWT_SECRET: {{ env.JWT_SECRET }}
+      REFRESH_SECRET: {{ env.REFRESH_SECRET }}
+      YOS_ACCESS_KEY_ID: {{ env.YOS_ACCESS_KEY_ID }}
+      YOS_SECRET_ACCESS_KEY: {{ env.YOS_SECRET_ACCESS_KEY }}
+    restart: always
+    ports:
+      - '80:80'

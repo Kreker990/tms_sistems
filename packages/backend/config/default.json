@@ -1,0 +1,18 @@
+{
+  "db": {
+    "host": "localhost",
+    "name": "tmsistems",
+    "user": "tmsistems_user"
+  },
+  "yos": {
+    "region": "ru-central1",
+    "endpoint": "https://storage.yandexcloud.net",
+    "imageBucket": "astroapp",
+    "videoBucket": "astroapp-video",
+    "trainerBucket": "astroapp-trainer"
+  },
+  "auth": {
+    "accessTokenExpiration": "7d",
+    "refreshTokenExpiration": "30d"
+  }
+}

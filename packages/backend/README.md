@@ -1,0 +1,12 @@
+# Astro Backend
+
+```
+packages/backend/.env
+
+DB_PASSWORD=
+EXPO_ACCESS_TOKEN=
+JWT_SECRET=
+REFRESH_SECRET=
+YOS_ACCESS_KEY_ID=
+YOS_SECRET_ACCESS_KEY=
+```

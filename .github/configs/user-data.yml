@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: administrator
+    groups: sudo, docker
+    shell: /bin/bash
+    sudo: [ 'ALL=(ALL) NOPASSWD:ALL' ]
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCVLkUsIzDseuyGciyxOVMXVRl/mxHgOg8lsn3UnhnB71B/dT30gPw6Wz8My1AcNnP7YbdmvZeH7N2e/hE17fJL3u9eeBwezWlFT339l9igo3ZoYtY/WTcYtix5DvTWEHG5UZzeGSGBKcS93G3yd9Gika/w9N2jke02LsQwHN22bPCJM6+itAp2nRza5fnVPrpxvqaeeYiB/ROV06zFz8F96LgecylNToVaTsW+PLBuv7WeyKqpsHDuytPvcWaQGWp8Mg3PrAyTSF4p5HLZ2lag9TFKQE6XCZIp2VfWKcQ9ojP40TYKa9I8x5h+4gWDkx1jCY8RRPVmT6+wUXkoujT9LHX1rXV1K7LSOYV9eeLMbtSQWue0lIUDgNuX6iAh+Iz1NBOJ6bNZfeKw+sYgOU5c3Ni+vSbjNeuI/8ghACNu6N/bYfhqyMO4B93QH6GqtnSHUZXGPKY+DR3YH+yQUWtyW2hTdyhF8Z3A0T5Gn351tTyV90kxpsudDr5ymW2Lfw8= pavel@ubuntu

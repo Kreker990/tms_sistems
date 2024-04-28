@@ -1,0 +1,40 @@
+name: Deploy Voting Application
+on:
+  push:
+      paths-ignore:
+        - '.github/**'
+        - 'packages/backend/**'
+        - 'packages/admin-frontend/**'
+        - 'README.md'
+      branches:
+        - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      REACT_APP_SERVER_URL: ${{ vars.REACT_APP_SERVER_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: ./packages/voting/package-lock.json
+
+      - name: Install dependencies
+        run: npm i
+        working-directory: packages/voting
+
+      - name: Build Application
+        run: REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL && CI=false && npm run build
+        working-directory: packages/voting
+ 
+      - name: Upload files to Object Storage
+        uses: yc-actions/yc-obj-storage-upload@v1
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_JSON_CREDENTIALS }}
+          bucket: ${{ vars.YC_BUCKET_VOTING }}
+          root: ./packages/voting/build
+          include: '**'

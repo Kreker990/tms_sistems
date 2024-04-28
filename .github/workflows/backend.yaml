@@ -1,0 +1,57 @@
+name: Deploy Backend Application
+on:
+  push:
+      paths-ignore:
+        - '.github/**'
+        - 'README.md'
+        - 'packages/admin-frontend/**'
+        - 'packages/voting/**'
+      branches:
+        - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CR_REGISTRY: ${{ secrets.YC_CONTAINER_REGISRTY }}
+      IMAGE_TAG: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker Image
+        run: docker build . -t $CR_REGISTRY:$IMAGE_TAG
+        working-directory: ./packages/backend
+        
+      - name: Login to Yandex Cloud Container Registry
+        uses: yc-actions/yc-cr-login@v1
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_JSON_CREDENTIALS }}
+  
+      - name: Push image to Yandex Cloud Container Registry
+        run: docker push $CR_REGISTRY:$IMAGE_TAG
+  
+      - name: Deploy COI VM
+        uses: yc-actions/yc-coi-deploy@v2
+        env:
+          IMAGE_URL: ${{ secrets.YC_CONTAINER_REGISRTY }}:${{ env.IMAGE_TAG }}
+          DATABASE_URL: ${{ vars.DATABASE_URL }}
+          EXPO_ACCESS_TOKEN: ${{ vars.EXPO_ACCESS_TOKEN }}
+          PORT: ${{ vars.PORT }}
+          JWT_SECRET: ${{ vars.JWT_SECRET }}
+          REFRESH_SECRET: ${{ vars.REFRESH_SECRET }}
+          YOS_ACCESS_KEY_ID: ${{ secrets.YOS_ACCESS_KEY_ID }}
+          YOS_SECRET_ACCESS_KEY: ${{ secrets.YOS_SECRET_ACCESS_KEY }}
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_JSON_CREDENTIALS }}
+          folder-id: ${{ secrets.YC_FOLDER_ID }}
+          vm-name: backend
+          vm-cores: 2
+          vm-memory: 1Gb
+          vm-disk-size: 30Gb
+          vm-disk-type: 'network-ssd'
+          vm-zone-id: 'ru-central1-b'
+          vm-core-fraction: 50
+          vm-service-account-id: ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
+          vm-subnet-id: ${{ secrets.YC_NETWORK_ID }}
+          user-data-path: '.github/configs/user-data.yml'
+          docker-compose-path: '.github/configs/docker-compose.yml'
+
