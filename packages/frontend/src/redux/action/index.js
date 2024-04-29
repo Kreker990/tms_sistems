@@ -1,6 +1,6 @@
 import { API_AUTH } from "../config";
 
-export function showNotification(type) {
+export function showNotification(type, text) {
   const notification = document.getElementById('notification');
   if (type === 'red') {
     notification.style.backgroundColor = `rgb(255,0,0)`
@@ -9,6 +9,9 @@ export function showNotification(type) {
     notification.style.backgroundColor = `#28a745`
     notification.innerHTML = 'Сохранено успешно!'
   }
+  if (text) {
+    notification.innerHTML = text
+  }
   notification.classList.add('show');
 
   setTimeout(() => {
@@ -16,7 +19,7 @@ export function showNotification(type) {
   }, 3000);
 }
 
-export const login = async ({ mail, password }) => {
+export const login = async ({ mail, password }, succes) => {
   try {
     const response = await fetch(API_AUTH, {
       method: 'POST', // Метод запроса
@@ -28,9 +31,18 @@ export const login = async ({ mail, password }) => {
         password: password
       })
     });
-
-    const data = await response.json(); // Ожидаем и преобразуем ответ в JSON
-    console.log('Успешный ответ:', data);
+    if (response.ok) {
+      const data = await response.json(); // Ожидаем и преобразуем ответ в JSON
+      console.log('Успешный ответ:', data);
+      succes();
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('mail', mail);
+      localStorage.setItem('role', data.role);
+      localStorage.setItem('id', data.id);
+      showNotification('', 'Успешно!')
+      return
+    }
+    showNotification('red', 'Пользователь не существует!')
   } catch (error) {
     console.error('Ошибка:', error); // Ловим и выводим ошибки запроса или JSON-преобразования
   }
