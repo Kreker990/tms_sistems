@@ -1,23 +1,17 @@
 require('./models');
-const { Drivers } = require('./models');
+const { StatusOrder } = require('./models');
 
 const create = async (
   {
-    name,
-    carNumber,
-    mail,
-    contact,
-    busy,
+    key,
+    value,
   },
 ) => {
   try {
     // eslint-disable-next-line no-unused-vars
-    const driver = await Drivers.create({
-      name,
-      carNumber,
-      mail,
-      contact,
-      busy,
+    const driver = await StatusOrder.create({
+      key,
+      value
     });
     return 1;
   } catch (error) {

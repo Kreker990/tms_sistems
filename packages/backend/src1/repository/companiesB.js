@@ -1,23 +1,21 @@
 require('./models');
-const { Drivers } = require('./models');
+const { CompaniesB } = require('./models');
 
 const create = async (
   {
     name,
-    carNumber,
-    mail,
-    contact,
-    busy,
+    email,
+    type,
+    address,
   },
 ) => {
   try {
     // eslint-disable-next-line no-unused-vars
-    const driver = await Drivers.create({
+    const driver = await CompaniesB.create({
       name,
-      carNumber,
-      mail,
-      contact,
-      busy,
+      email,
+      type,
+      address,
     });
     return 1;
   } catch (error) {

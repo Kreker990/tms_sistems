@@ -15,7 +15,8 @@ const Staff = db.sequelize.define('Staff', {
   },
   mail: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
+    unique: true,
   },
   contact: {
     type: DataTypes.STRING,
@@ -26,8 +27,10 @@ const Staff = db.sequelize.define('Staff', {
     allowNull: true,
   },
   hashedPassword: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.BLOB,
+  },
+  salt: {
+    type: DataTypes.BLOB,
   },
 });
 

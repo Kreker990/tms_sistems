@@ -12,6 +12,7 @@ const StatusOrder = db.sequelize.define('StatusOrder', {
   key: {
     type: DataTypes.STRING,
     allowNull: true,
+    unique: true,
   },
   value: {
     type: DataTypes.STRING,

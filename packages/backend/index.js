@@ -6,29 +6,12 @@ const path = require('path');
 
 const db = require('./db');
 
-// const setupJwtStrategy = require('./src/middleware/jwtStrategy');
-// const jwtAdminStrategy = require('./src/middleware/jwtAdminStrategy');
-
-// const healthcheckApi = require('./src/api/healthcheck');
-// const practicesApi = require('./src/api/practices');
-// const webVoteApi = require('./src/api/webVote');
-// const authApi = require('./src/api/auth');
-// const starProfileApi = require('./src/api/starProfile');
-// const newReleasesApi = require('./src/api/newReleases');
-// const topChartApi = require('./src/api/topChart');
-// const notificationsApi = require('./src/api/notifications');
-// const juryApi = require('./src/api/jury');
-// const trainerApi = require('./src/api/trainer');
-
-// new
+const staff = require('./src1/api/staff');
 const driver = require('./src1/api/driver');
-// const driver = require('./src1/api/driver');
-// const driver = require('./src1/api/driver');
-// const driver = require('./src1/api/driver');
-// const driver = require('./src1/api/driver');
-// const driver = require('./src1/api/driver');
-// const driver = require('./src1/api/driver');
-//
+const companiesA = require('./src1/api/companiesA');
+const companiesB = require('./src1/api/companiesB');
+const statusOrder = require('./src1/api/statusOrder');
+// const order = require('./src1/api/driver');
 
 const PORT = process.env.PORT || 3011;
 
@@ -40,19 +23,12 @@ app.use(passport.initialize());
 app.use('/admin', express.static(path.join(__dirname, 'admin-frontend-dist')));
 app.use('/static', express.static(path.join(__dirname, 'admin-frontend-dist', 'static')));
 
-// setupJwtStrategy(passport);
-// jwtAdminStrategy(passport);
-
+app.use('/api/v1/staff', staff);
 app.use('/api/v1/driver', driver);
-// app.use('/api/v1/practices', practicesApi);
-// app.use('/api/v1/webVote', webVoteApi);
-// app.use('/api/v1/auth', authApi);
-// app.use('/api/v1/starProfile', starProfileApi);
-// app.use('/api/v1/new-releases', newReleasesApi);
-// app.use('/api/v1/top-chart', topChartApi);
-// app.use('/api/v1/notifications', notificationsApi);
-// app.use('/api/v1/jury', juryApi);
-// app.use('/api/v1/trainer', trainerApi);
+app.use('/api/v1/companiesa', companiesA);
+app.use('/api/v1/companiesb', companiesB);
+app.use('/api/v1/statusorder', statusOrder);
+// app.use('/api/v1/order', order);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin-frontend-dist', 'index.html'));
