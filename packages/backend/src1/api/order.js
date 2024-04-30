@@ -1,19 +1,15 @@
 const express = require('express');
-const DriversRepository = require('../repository/driver');
+const OrdersRepository = require('../repository/order');
 
-const router = express.Router();
-
-// eslint-disable-next-line consistent-return
 const createHandler = async (req, res) => {
   try {
-    const { name, carNumber, mail, contact, busy, } = req.body;
+    const { ida, idb, iddriver,  } = req.body;
 
-    // проверка заполненных полей;
     const fields = [
       { key: 'name', value: name },
-      { key: 'carNumber', value: carNumber },
-      { key: 'mail', value: mail },
-      { key: 'contact', value: contact },
+      { key: 'email', value: email },
+      { key: 'type', value: type },
+      { key: 'address', value: address }
     ];
     const errors = fields
       .filter(field => field.value === undefined || field.value === null || field.value === '') // проверяем на непустое значение
@@ -22,12 +18,11 @@ const createHandler = async (req, res) => {
       return res.status(400).json({ errors });
     }
 
-    DriversRepository.create({
+    companiesARepository.create({
       name,
-      carNumber,
-      mail,
-      contact,
-      busy,
+      email,
+      type,
+      address,
     }).then((e) => {
       return res.json('Успешно');
     }).catch(() => {
@@ -38,22 +33,13 @@ const createHandler = async (req, res) => {
   }
 };
 
-const getDrivers = async (req, res) => {
+const getAll = async (req, res) => {
   try {
-    const data = await DriversRepository.findAllData();
+    const data = await OrdersRepository.findAllData();
     return res.json(data);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-const deleteHandler = async (req, res) => {
-  try {
-    await DriversRepository.delet(req.params.id);
-    return res.json('Успешно удален');
-  } catch (error) {
-    return res.status(500).json({ message: 'Ошибка при удалении ', error: error.message });
   }
 };
 
@@ -63,11 +49,7 @@ router.post(
 );
 router.get(
   '/',
-  getDrivers,
-);
-router.delete(
-  '/:id',
-  deleteHandler,
+  getAll,
 );
 
 module.exports = router;

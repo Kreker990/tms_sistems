@@ -20,6 +20,15 @@ const create = async (
   }
 };
 
+const findAllData = async () => {
+  const data = await StatusOrder.findAll();
+  return data;
+};
+
+const delet = async (id) => StatusOrder.destroy({ where: { id } });
+
 module.exports = {
   create,
+  findAllData,
+  delet,
 };

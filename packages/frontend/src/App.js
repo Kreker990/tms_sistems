@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-ro
 import Admin from './pages/Admin/Admin';
 import './App.css';
 import AuthModal from './components/AuthModal/AuthModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import 'rsuite/dist/rsuite.min.css';
 
 
@@ -19,6 +19,7 @@ import ComB from './pages/ComB/ComB';
 import Drivers from './pages/Drivers/Drivers';
 import StatusOrder from './pages/StatusOrder/StatusOrder';
 import Oders from './pages/Orders/Oders';
+import { getDriver } from './redux/action/getDriver';
 
 const headerStyles = {
   padding: 18,
@@ -44,16 +45,20 @@ const NavToggle = ({ expand, onChange }) => {
 };
 
 export default function App() {
-  // const authorized = useSelector(s => s.authorized.value);
+  const dispatch = useDispatch();
+  const authorized = useSelector(s => s.authorized.value);
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const location = useLocation();
   const [expand, setExpand] = React.useState(true);
 
   const navigate = useNavigate();
-function handleActive(url) {
-  navigate(url);
-}
+  function handleActive(url) {
+    navigate(url);
+  }
+  useEffect(()=>{
+    dispatch(getDriver());
+  })
   return (
     <div className="show-fake-browser sidebar-page">
       <Container>
@@ -99,17 +104,17 @@ function handleActive(url) {
 
         <Container>
           <div className='routes'>
-              <Routes>
-                <Route path="/" element={<Admin />} />
-                <Route path="/staff" element={<Staff />} />
-                <Route path="/drivers" element={<Drivers />} />
-                <Route path="/coma" element={<ComA />} />
-                <Route path="/comb" element={<ComB />} />
-                <Route path="/statosorder" element={<StatusOrder />} />
-                <Route path="/orders" element={<Oders />} />
-              </Routes>
+            <Routes>
+              <Route path="/" element={<Admin />} />
+              <Route path="/staff" element={<Staff />} />
+              <Route path="/drivers" element={<Drivers />} />
+              <Route path="/coma" element={<ComA />} />
+              <Route path="/comb" element={<ComB />} />
+              <Route path="/statosorder" element={<StatusOrder />} />
+              <Route path="/orders" element={<Oders />} />
+            </Routes>
             {
-              // !authorized && <AuthModal />
+              !authorized && <AuthModal />
             }
             <div id="notification" className="notification">
               Сохранено успешно!
