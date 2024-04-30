@@ -51,9 +51,9 @@ const createHandler = async (req, res) => {
 const auth = async (req, res) => {
   try {
     const { mail, password } = req.body;
-
+    console.log(req.body)
     if (!(mail && password)) {
-      return res.status(400).json({ message: 'Input required for both Email and Password' });
+      return res.status(400).json({ message: 'заполните поля mail, password' });
     }
 
     const user = await StaffRepository.findByEmail(mail);
@@ -75,7 +75,9 @@ const auth = async (req, res) => {
     );
 
     return res.json({
-      token
+      token,
+      role: user.role,
+      id: user.id,
     });
   } catch (error) {
     console.log(error);

@@ -14,7 +14,6 @@ const createHandler = async (req, res) => {
       { key: 'carNumber', value: carNumber },
       { key: 'mail', value: mail },
       { key: 'contact', value: contact },
-      { key: 'busy', value: busy }
     ];
     const errors = fields
       .filter(field => field.value === undefined || field.value === null || field.value === '') // проверяем на непустое значение
@@ -39,9 +38,36 @@ const createHandler = async (req, res) => {
   }
 };
 
+const getDrivers = async (req, res) => {
+  try {
+    const data = await DriversRepository.findAllData();
+    return res.json(data);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const deleteHandler = async (req, res) => {
+  try {
+    await DriversRepository.delet(req.params.id);
+    return res.json('Успешно удален');
+  } catch (error) {
+    return res.status(500).json({ message: 'Ошибка при удалении урока', error: error.message });
+  }
+};
+
 router.post(
   '/',
   createHandler,
+);
+router.get(
+  '/',
+  getDrivers,
+);
+router.delete(
+  '/:id',
+  deleteHandler,
 );
 
 module.exports = router;
