@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Admin from './pages/Admin/Admin';
 import './App.css';
 import AuthModal from './components/AuthModal/AuthModal';
@@ -44,10 +44,16 @@ const NavToggle = ({ expand, onChange }) => {
 };
 
 export default function App() {
-  const authorized = useSelector(s => s.authorized.value);
+  // const authorized = useSelector(s => s.authorized.value);
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
+  const location = useLocation();
   const [expand, setExpand] = React.useState(true);
+
+  const navigate = useNavigate();
+function handleActive(url) {
+  navigate(url);
+}
   return (
     <div className="show-fake-browser sidebar-page">
       <Container>
@@ -63,7 +69,7 @@ export default function App() {
           </Sidenav.Header>
           <Sidenav expanded={expand} defaultOpenKeys={['3']} appearance="subtle">
             <Sidenav.Body>
-              <Nav>
+              <Nav activeKey={location.pathname} onSelect={handleActive}>
                 <Nav.Item eventKey="/" icon={<BarChartIcon />}>
                   Главная
                 </Nav.Item>
@@ -93,7 +99,6 @@ export default function App() {
 
         <Container>
           <div className='routes'>
-            <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Admin />} />
                 <Route path="/staff" element={<Staff />} />
@@ -103,9 +108,8 @@ export default function App() {
                 <Route path="/statosorder" element={<StatusOrder />} />
                 <Route path="/orders" element={<Oders />} />
               </Routes>
-            </BrowserRouter>
             {
-              !authorized && <AuthModal />
+              // !authorized && <AuthModal />
             }
             <div id="notification" className="notification">
               Сохранено успешно!
