@@ -1,5 +1,10 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../../db');
+const { CompaniesA } = require('./companiesA');
+const { CompaniesB } = require('./companiesB');
+const { Drivers } = require('./driver');
+const { StatusOrder } = require('./statusOrder');
+const { Staff } = require('./staff');
 
 const Orders = db.sequelize.define('Orders', {
   id: {
@@ -10,20 +15,32 @@ const Orders = db.sequelize.define('Orders', {
     autoIncrement: true,
   },
   deliveryPointA: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.INTEGER,
+    references: {
+      model: CompaniesA,
+      key: 'id',
+    },
   },
   deliveryPointB: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.INTEGER,
+    references: {
+      model: CompaniesB,
+      key: 'id',
+    },
   },
   driverId: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.INTEGER,
+    references: {
+      model: Drivers,
+      key: 'id',
+    },
   },
   status: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.INTEGER,
+    references: {
+      model: StatusOrder,
+      key: 'id',
+    },
   },
   timeStart: {
     type: DataTypes.STRING,
@@ -34,8 +51,11 @@ const Orders = db.sequelize.define('Orders', {
     allowNull: true,
   },
   managerId: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.INTEGER,
+    references: {
+      model: Staff,
+      key: 'id',
+    },
   },
   comment: {
     type: DataTypes.STRING,
