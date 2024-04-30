@@ -31,7 +31,16 @@ const findByEmail = async (mail) => {
   return user;
 };
 
+const findAllData = async () => {
+  const data = await Staff.findAll();
+  return data;
+};
+
+const delet = async (id) => Staff.destroy({ where: { id } });
+
 module.exports = {
   create,
   findByEmail,
+  findAllData,
+  delet
 };

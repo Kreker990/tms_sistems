@@ -53,7 +53,7 @@ const deleteHandler = async (req, res) => {
     await DriversRepository.delet(req.params.id);
     return res.json('Успешно удален');
   } catch (error) {
-    return res.status(500).json({ message: 'Ошибка при удалении урока', error: error.message });
+    return res.status(500).json({ message: 'Ошибка при удалении ', error: error.message });
   }
 };
 

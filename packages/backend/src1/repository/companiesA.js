@@ -24,6 +24,15 @@ const create = async (
   }
 };
 
+const findAllData = async () => {
+  const data = await CompaniesA.findAll();
+  return data;
+};
+
+const delet = async (id) => CompaniesA.destroy({ where: { id } });
+
 module.exports = {
   create,
+  findAllData,
+  delet,
 };

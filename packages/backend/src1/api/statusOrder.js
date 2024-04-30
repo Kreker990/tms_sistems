@@ -33,9 +33,36 @@ const createHandler = async (req, res) => {
   }
 };
 
+const getAll = async (req, res) => {
+  try {
+    const data = await StatusOrderRepository.findAllData();
+    return res.json(data);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const deleteById = async (req, res) => {
+  try {
+    await StatusOrderRepository.delet(req.params.id);
+    return res.json('Успешно удален');
+  } catch (error) {
+    return res.status(500).json({ message: 'Ошибка при удалении ', error: error.message });
+  }
+};
+
 router.post(
   '/',
   createHandler,
+);
+router.get(
+  '/',
+  getAll,
+);
+router.delete(
+  '/:id',
+  deleteById,
 );
 
 module.exports = router;
