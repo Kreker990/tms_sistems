@@ -6,7 +6,7 @@ const constructDbUrl = (host, dbName, user, password) => {
     return null;
   }
 
-  return `postgres://${user}:${password}@${host}:5432/${dbName}`;
+  return `postgres://${user}:${password}@${host}:5000/${dbName}`;
 };
 
 const { host, name: dbName, user } = config.db;

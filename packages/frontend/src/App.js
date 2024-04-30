@@ -114,7 +114,7 @@ export default function App() {
               <Route path="/orders" element={<Oders />} />
             </Routes>
             {
-              !authorized && <AuthModal />
+              // !authorized && <AuthModal />
             }
             <div id="notification" className="notification">
               Сохранено успешно!
