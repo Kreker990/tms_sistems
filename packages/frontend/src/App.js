@@ -44,7 +44,7 @@ const NavToggle = ({ expand, onChange }) => {
 };
 
 export default function App() {
-  // const authorized = useSelector(s => s.authorized.value);
+  const authorized = useSelector(s => s.authorized.value);
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const location = useLocation();
@@ -109,7 +109,7 @@ function handleActive(url) {
                 <Route path="/orders" element={<Oders />} />
               </Routes>
             {
-              // !authorized && <AuthModal />
+              !authorized && <AuthModal />
             }
             <div id="notification" className="notification">
               Сохранено успешно!

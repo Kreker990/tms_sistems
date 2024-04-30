@@ -1,16 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-// import rootReducer from './reducer';
-import { authApi, commonApi } from './api';
+import { applyMiddleware, createStore } from "redux";
 import { rootReducer } from "./reducer";
+import thunk from "redux-thunk";
 
-export const store = configureStore({
-  reducer: {
-    // Добавление редьюсеров от RTK Query API
-    [commonApi.reducerPath]: commonApi.reducer,
-    // [authApi.reducerPath]: authApi.reducer,
-    // Ваши другие редьюсеры
-    ...rootReducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(commonApi.middleware, authApi.middleware),
-});
+export const store = createStore(rootReducer, applyMiddleware(thunk))
