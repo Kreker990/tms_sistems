@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Admin from './pages/Admin/Admin';
-import './App.css';
+import './App.css'
 import AuthModal from './components/AuthModal/AuthModal';
 import { useDispatch, useSelector } from 'react-redux';
 import 'rsuite/dist/rsuite.min.css';
@@ -20,6 +20,7 @@ import Drivers from './pages/Drivers/Drivers';
 import StatusOrder from './pages/StatusOrder/StatusOrder';
 import Oders from './pages/Orders/Oders';
 import { getDriver } from './redux/action/getDriver';
+import Header from './components/Header/Header';
 
 const headerStyles = {
   padding: 18,
@@ -63,6 +64,7 @@ export default function App() {
     <div className="show-fake-browser sidebar-page">
       <Container>
         <Sidebar
+          className='sidebar'
           style={{ display: 'flex', flexDirection: 'column' }}
           width={expand ? 260 : 56}
           collapsible
@@ -103,6 +105,7 @@ export default function App() {
         </Sidebar>
 
         <Container>
+          <Header/>
           <div className='routes'>
             <Routes>
               <Route path="/" element={<Admin />} />
@@ -119,7 +122,7 @@ export default function App() {
             <div id="notification" className="notification">
               Сохранено успешно!
             </div>
-            <button onClick={() => { }}>jkjk</button>
+            {/* <button onClick={() => { }}></button> */}
           </div>
         </Container>
       </Container>

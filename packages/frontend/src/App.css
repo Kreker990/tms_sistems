@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import './buttons.css';
+
 * {
     padding: 0;
     margin: 0;
@@ -5,7 +10,7 @@
 }
 
 body {
-    background-color: gray;
+    background-color: #fafafa !important;
 }
 
 .notification {
@@ -32,4 +37,31 @@ body {
     visibility: visible;
     transform: translateX(0);
     /* конечное положение */
+}
+
+.container-center {
+    margin: 20px;
+    padding: 20px;
+}
+
+.content-white {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.rs-modal {
+    margin-top: 70px !important;
+}
+
+.rs-modal-body {
+    max-height: 380px !important;
+}
+
+.driverEditModal .rs-modal-body {
+    padding-bottom: 0 !important;
+}
+
+.sidebar {
+    background-color: #fff;
 }

@@ -6,7 +6,7 @@ const router = express.Router();
 // eslint-disable-next-line consistent-return
 const createHandler = async (req, res) => {
   try {
-    const { name, carNumber, mail, contact, busy, } = req.body;
+    const { name, carNumber, mail, contact, busy } = req.body;
 
     // проверка заполненных полей;
     const fields = [
@@ -22,21 +22,19 @@ const createHandler = async (req, res) => {
       return res.status(400).json({ errors });
     }
 
-    DriversRepository.create({
+    const driver = await DriversRepository.create({
       name,
       carNumber,
       mail,
       contact,
       busy,
-    }).then((e) => {
-      return res.json('Успешно');
-    }).catch(() => {
-      return res.status(500).json('Внутренняя ошибка БД');
     });
+    return res.status(201).json({ message: "Водитель успешно добавлен.", data: driver })
   } catch (error) {
     return res.status(500).json({ message: 'Ошибка', error: error.message });
   }
 };
+
 
 const getDrivers = async (req, res) => {
   try {
@@ -47,6 +45,29 @@ const getDrivers = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+const updateHandler = async (req, res) => {
+  const { id } = req.params;
+  const { name, carNumber, mail, contact, busy } = req.body;
+
+  try {
+    const updated = await DriversRepository.update(id, {
+      name,
+      carNumber,
+      mail,
+      contact,
+      busy,
+    });
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Водитель не найден' });
+    }
+
+    return res.status(201).json({ message: "Водитель успешно обновлен.", data: updated });
+  } catch (error) {
+    return res.status(500).json({ message: 'Ошибка при обновлении', error: error.message });
+  }
+};
+
 
 const deleteHandler = async (req, res) => {
   try {
@@ -69,5 +90,7 @@ router.delete(
   '/:id',
   deleteHandler,
 );
+router.put('/:id', updateHandler);
+
 
 module.exports = router;
