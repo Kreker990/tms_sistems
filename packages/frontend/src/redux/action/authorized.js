@@ -1,11 +1,13 @@
 import { CHECK_ADMIN } from "../reducer/type"
 
-export const authorizedUpdate = (status) => {
+export const authorizedUpdate = (status, role) => {
   return async (dispatch) => {
-    console.log(1)
     dispatch({
       type: CHECK_ADMIN,
-      payload: { value: status }
+      payload: {
+        value: status,
+        role: role
+      }
     })
   }
 }

@@ -33,8 +33,7 @@ export const login = async ({ mail, password }, succes) => {
     });
     if (response.ok) {
       const data = await response.json(); // Ожидаем и преобразуем ответ в JSON
-      console.log('Успешный ответ:', data);
-      succes();
+      succes(data.role);
       localStorage.setItem('token', data.token);
       localStorage.setItem('mail', mail);
       localStorage.setItem('role', data.role);
@@ -45,5 +44,13 @@ export const login = async ({ mail, password }, succes) => {
     showNotification('red', 'Пользователь не существует!')
   } catch (error) {
     console.error('Ошибка:', error); // Ловим и выводим ошибки запроса или JSON-преобразования
+  }
+}
+
+export const checkAuth = (succes) => {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+  if (token) {
+    succes(role)
   }
 }

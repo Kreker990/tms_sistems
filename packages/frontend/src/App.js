@@ -14,6 +14,9 @@ import AngleRightIcon from '@rsuite/icons/legacy/AngleRight';
 import AdminIcon from '@rsuite/icons/Admin';
 import BarChartIcon from '@rsuite/icons/BarChart';
 import MemberIcon from '@rsuite/icons/Member';
+import LocationIcon from '@rsuite/icons/Location';
+import { List } from '@rsuite/icons';
+import SettingHorizontalIcon from '@rsuite/icons/SettingHorizontal';
 import Staff from './pages/Staff/Staff';
 import ComA from './pages/ComA/ComA';
 import ComB from './pages/ComB/ComB';
@@ -23,6 +26,8 @@ import Oders from './pages/Orders/Oders';
 import { getDriver } from './redux/action/getDriver';
 import Header from './components/Header/Header';
 import icon from './assets/icon.png'
+import { checkAuth } from './redux/action';
+import { authorizedUpdate } from './redux/action/authorized';
 
 const headerStyles = {
   fontSize: 16,
@@ -50,7 +55,8 @@ const NavToggle = ({ expand, onChange }) => {
 
 export default function App() {
   const dispatch = useDispatch();
-  const authorized = useSelector(s => s.authorized.value);
+  const authorized = useSelector(s => s.authorized);
+  const [load, setLoad] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const location = useLocation();
@@ -60,9 +66,20 @@ export default function App() {
   function handleActive(url) {
     navigate(url);
   }
+  const succes = (role) => {
+    setLoad(true)
+    dispatch(authorizedUpdate(true, role))
+  }
   useEffect(() => {
     dispatch(getDriver());
-  })
+    if (!load) {
+      checkAuth(succes);
+    }
+  }, [])
+  console.log(authorized)
+  if (!authorized.value) {
+    return <AuthModal />
+  }
   return (
     <div className="show-fake-browser sidebar-page">
       <Container>
@@ -89,21 +106,26 @@ export default function App() {
                 <Nav.Item eventKey="/drivers" icon={<MemberIcon />}>
                   Водители
                 </Nav.Item>
-                <Nav.Item eventKey="/staff" icon={<AdminIcon />}>
-                  Персонал
-                </Nav.Item>
-                <Nav.Item eventKey="/orders" >
+                <Nav.Item eventKey="/orders" icon={<List />}>
                   Заказы
                 </Nav.Item>
-                <Nav.Item eventKey="/coma" >
+                <Nav.Item eventKey="/coma" icon={<LocationIcon />}>
                   Точки отправки
                 </Nav.Item>
-                <Nav.Item eventKey="/comb" >
+                <Nav.Item eventKey="/comb" icon={<LocationIcon />}>
                   Точки доставки
                 </Nav.Item>
-                <Nav.Item eventKey="/statosorder" >
-                  Статус заказов
-                </Nav.Item>
+                {authorized.role === 'admin' &&
+                  <Nav.Item eventKey="/statosorder" icon={<SettingHorizontalIcon />}>
+                    Статус заказов
+                  </Nav.Item>
+                }
+                {authorized.role === "admin" &&
+                  <Nav.Item eventKey="/staff" icon={<AdminIcon />}>
+                    Персонал
+                  </Nav.Item>
+                }
+
               </Nav>
             </Sidenav.Body>
           </Sidenav>
@@ -122,12 +144,6 @@ export default function App() {
               <Route path="/statosorder" element={<StatusOrder />} />
               <Route path="/orders" element={<Oders />} />
             </Routes>
-            {
-              !authorized && <AuthModal />
-            }
-            <div id="notification" className="notification">
-              Сохранено успешно!
-            </div>
           </div>
         </Container>
       </Container>

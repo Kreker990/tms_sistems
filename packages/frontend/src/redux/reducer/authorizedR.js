@@ -2,6 +2,7 @@ import { CHECK_ADMIN } from "./type";
 
 const initialState = {
   value: false,
+  role: '',
 }
 
 const getCheckAdmin = (state = initialState, action) => {

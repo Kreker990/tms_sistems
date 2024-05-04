@@ -2,7 +2,6 @@ import { GET_DRIVER, ADD_DRIVER, UPDATE_DRIVER, DELETE_DRIVER } from "../reducer
 import { API_DRIVERS } from "../config";
 import toast from "react-hot-toast";
 
-// Существующий экшен для получения водителей
 export const getDriver = () => {
     return async (dispatch) => {
         const response = await fetch(API_DRIVERS);

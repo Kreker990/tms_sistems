@@ -11,13 +11,16 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Toaster
-          position={'top-right'}
-          reverseOrder={false}
-          toastOptions={{
-            duration: 3000,
-          }}
-        />
+        position={'top-right'}
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
       <App />
+      <div id="notification" className="notification">
+        Сохранено успешно!
+      </div>
     </BrowserRouter>
   </Provider>
 );

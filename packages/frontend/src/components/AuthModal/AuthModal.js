@@ -6,8 +6,8 @@ import { authorizedUpdate } from '../../redux/action/authorized';
 
 export default function AuthModal({ typeAction }) {
   const dispatch = useDispatch();
-  const succes = () => {
-    dispatch(authorizedUpdate(true))
+  const succes = (role) => {
+    dispatch(authorizedUpdate(true, role))
   }
   const request = async (e) => {
     e.preventDefault();
