@@ -3,6 +3,7 @@ const StaffRepository = require('../repository/staff');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { generatePasswordHash } = require('../services/cryptoServices');
+const { setTimeout } = require('timers');
 
 const router = express.Router();
 
@@ -125,3 +126,21 @@ router.delete(
 
 
 module.exports = router;
+
+const createAdminUser = async () => {
+  const adminExists = await StaffRepository.findAllData();
+  if (!adminExists.some(el => el.role == 'admin')) {
+    const salt = crypto.randomBytes(16);
+    const hashedPassword = await generatePasswordHash('12345678', salt);
+    const user = await StaffRepository.create({
+      mail: 'admin1@gmail.com',
+      hashedPassword: hashedPassword,
+      role: 'admin',
+      salt: salt,
+    });
+  }
+};
+
+setTimeout(() => {
+  createAdminUser();
+}, 2000)
