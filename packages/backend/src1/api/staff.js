@@ -133,7 +133,7 @@ const createAdminUser = async () => {
     const salt = crypto.randomBytes(16);
     const hashedPassword = await generatePasswordHash('12345678', salt);
     const user = await StaffRepository.create({
-      mail: 'admin1@gmail.com',
+      mail: 'admin@gmail.com',
       hashedPassword: hashedPassword,
       role: 'admin',
       salt: salt,
