@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Admin from './pages/Admin/Admin';
@@ -21,15 +22,17 @@ import StatusOrder from './pages/StatusOrder/StatusOrder';
 import Oders from './pages/Orders/Oders';
 import { getDriver } from './redux/action/getDriver';
 import Header from './components/Header/Header';
+import icon from './assets/icon.png'
 
 const headerStyles = {
-  padding: 18,
   fontSize: 16,
   height: 56,
-  background: 'gray',
-  color: ' #fff',
+  background: 'black',
+  color: 'white',
   whiteSpace: 'nowrap',
-  overflow: 'hidden'
+  overflow: 'hidden',
+  display: 'flex',
+  alignItems: 'center',
 };
 
 const NavToggle = ({ expand, onChange }) => {
@@ -57,7 +60,7 @@ export default function App() {
   function handleActive(url) {
     navigate(url);
   }
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getDriver());
   })
   return (
@@ -65,13 +68,16 @@ export default function App() {
       <Container>
         <Sidebar
           className='sidebar'
-          style={{ display: 'flex', flexDirection: 'column' }}
+          style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
           width={expand ? 260 : 56}
           collapsible
         >
           <Sidenav.Header>
             <div style={headerStyles}>
-              <span style={{ marginLeft: 12 }}></span>
+              <img src={icon} width={56} height={56} />
+              <span style={{ marginLeft: '4px', fontWeight: '600' }}>
+                Система доставки
+              </span>
             </div>
           </Sidenav.Header>
           <Sidenav expanded={expand} defaultOpenKeys={['3']} appearance="subtle">
@@ -105,7 +111,7 @@ export default function App() {
         </Sidebar>
 
         <Container>
-          <Header/>
+          <Header />
           <div className='routes'>
             <Routes>
               <Route path="/" element={<Admin />} />
@@ -117,12 +123,11 @@ export default function App() {
               <Route path="/orders" element={<Oders />} />
             </Routes>
             {
-              // !authorized && <AuthModal />
+              !authorized && <AuthModal />
             }
             <div id="notification" className="notification">
               Сохранено успешно!
             </div>
-            {/* <button onClick={() => { }}></button> */}
           </div>
         </Container>
       </Container>

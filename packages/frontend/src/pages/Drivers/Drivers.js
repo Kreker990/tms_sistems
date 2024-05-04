@@ -8,16 +8,16 @@ export default function Drivers() {
   const drivers = useSelector(s => s.drivers);
   const dispatch = useDispatch();
   console.log(drivers);
-  
+
   useEffect(() => {
     dispatch(() => getDriver());
-  },[dispatch])
+  }, [dispatch])
   console.log(drivers)
   return (
     <Container className='container-center'>
-    <Content className='content-white'>
-      {drivers && drivers.length > 0 ? <List data={drivers}/> : <h5>Нету данных</h5>}
+      <Content className='content-white'>
+        {drivers && drivers.length > 0 ? <List data={drivers} /> : <h5>Нету данных</h5>}
       </Content>
-      </Container>
+    </Container>
   )
 }
