@@ -12,7 +12,7 @@ const secret = process.env.JWT_SECRET;
 // eslint-disable-next-line consistent-return
 const createHandler = async (req, res) => {
   try {
-    const { mail, password, role } = req.body;
+    const { mail, password, role, contact, name } = req.body;
 
     // проверка заполненных полей;
     const fields = [
@@ -29,7 +29,7 @@ const createHandler = async (req, res) => {
 
     const salt = crypto.randomBytes(16);
     const hashedPassword = await generatePasswordHash(password, salt);
-    const user = await StaffRepository.create({ mail, hashedPassword, role, salt })
+    const user = await StaffRepository.create({ mail, hashedPassword, role, salt, name, contact })
     if (user) {
       const token = jwt.sign(
         { id: user.id, mail: mail, role: role },
@@ -41,6 +41,8 @@ const createHandler = async (req, res) => {
         mail,
         token,
         role,
+        name,
+        contact,
       });
     }
     return res.status(400).json({ message: 'Пользователь уже есть' })
@@ -96,6 +98,31 @@ const getAll = async (req, res) => {
   }
 };
 
+const updateHandler = async (req, res) => {
+  const { id } = req.params;
+  const { name, mail, contact, role } = req.body;
+
+  try {
+    const updated = await StaffRepository.update(id, {
+      name,
+      mail,
+      contact,
+      role,
+    });
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Данные не найдены' });
+    }
+
+    return res.status(200).json({
+      message: 'Данные сотрудника успешно обновлены.',
+      data: updated
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Ошибка при обновлении', error: error.message });
+  }
+};
+
 const deleteById = async (req, res) => {
   try {
     await StaffRepository.delet(req.params.id);
@@ -115,10 +142,18 @@ router.post(
   auth,
 );
 
+router.post(
+  '/',
+  createHandler,
+);
+
 router.get(
   '/',
   getAll,
 );
+
+router.put('/:id', updateHandler);
+
 router.delete(
   '/:id',
   deleteById,

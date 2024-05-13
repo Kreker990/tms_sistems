@@ -2,20 +2,20 @@ import { Button, Table } from 'rsuite';
 import { useState } from 'react';
 import AddEdit from '../edit';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteDriver } from '../../../redux/action/getDriver';
 import DelPopup from '../../../components/DelPopup';
 import { MdDeleteOutline, MdEdit, MdOutlineAdd } from "react-icons/md";
+import { deleteStaff } from '../../../redux/action/staff';
 
 
 const { Column, HeaderCell, Cell } = Table;
 
-export const List = ({ data }) => {
+export const List = ({data}) => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [delOpen, setDelOpen] = useState(false);
-  const [driverData, setData] = useState(null);
+  const [comBData, setData] = useState(null);
   const dispatch = useDispatch();
   const authorized = useSelector(s => s.authorized);
 
@@ -26,7 +26,7 @@ export const List = ({ data }) => {
     setOpen(true);
   };
   const hadnleDelete = (id) => {
-    dispatch(deleteDriver(id));
+    dispatch(deleteStaff(id));
     setDelOpen(false);
   };
 
@@ -64,7 +64,7 @@ export const List = ({ data }) => {
   return (
     <>
       <div className='flex justify-between items-center'>
-        <h5 className='table-title'>Водители</h5>
+        <h5 className='table-title'>Персонал</h5>
         {authorized.role === "admin" && <Button onClick={() => {
           setData(null);
           handleOpen();
@@ -74,7 +74,7 @@ export const List = ({ data }) => {
       </div>
       <div>
         <Table
-          height={100 + (data.length * 40)}
+          height={100 + (data?.length * 40)}
           className='mt-[20px]'
           data={getData()}
           sortColumn={sortColumn}
@@ -98,8 +98,8 @@ export const List = ({ data }) => {
           </Column>
 
           <Column flexGrow={1} sortable>
-            <HeaderCell>Номер машины</HeaderCell>
-            <Cell dataKey="carNumber" />
+            <HeaderCell>Электронная почта</HeaderCell>
+            <Cell dataKey="mail" />
           </Column>
 
           <Column flexGrow={1} sortable>
@@ -108,14 +108,8 @@ export const List = ({ data }) => {
           </Column>
 
           <Column flexGrow={1} sortable>
-            <HeaderCell>Электронная почта</HeaderCell>
-            <Cell dataKey="mail" />
-          </Column>
-          <Column flexGrow={1} sortable>
-            <HeaderCell>Занят</HeaderCell>
-            <Cell dataKey="busy" >
-              {rowData => (<span>{rowData['busy'] ? 'Занят' : 'Нет'}</span>)}
-            </Cell>
+            <HeaderCell>Роль</HeaderCell>
+            <Cell dataKey="role" />
           </Column>
           {
             authorized.role === "admin" && <Column fixed="right" width={100}>
@@ -144,10 +138,10 @@ export const List = ({ data }) => {
         </Table>
       </div>
       {
-        open && <AddEdit handleClose={handleClose} open={open} data={driverData} />
+        open && <AddEdit handleClose={handleClose} open={open} data={comBData} />
       }
       {
-        delOpen && <DelPopup handleDelete={() => hadnleDelete(driverData.id)} handleClose={() => setDelOpen(false)} open={delOpen} text={`Водителя ${driverData.name}`} />
+        delOpen && <DelPopup handleDelete={() => hadnleDelete(comBData.id)} handleClose={() => setDelOpen(false)} open={delOpen} text={`Точку доставки ${comBData.name}`} />
       }
     </>
   );

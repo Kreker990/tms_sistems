@@ -9,7 +9,7 @@ export default function Drivers() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(() => getDriver());
+    dispatch(getDriver());
   }, [dispatch])
   return (
     <Container className='container-center'>

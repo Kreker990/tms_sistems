@@ -6,7 +6,7 @@ export const getDriver = () => {
     return async (dispatch) => {
         const response = await fetch(API_DRIVERS);
         const resData = await response.json();
-        console.log(resData);
+      
         dispatch({
             type: GET_DRIVER,
             payload: resData

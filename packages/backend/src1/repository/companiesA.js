@@ -1,38 +1,50 @@
-require('./models');
 const { CompaniesA } = require('./models');
 
-const create = async (
-  {
-    name,
-    email,
-    type,
-    address,
-  },
-) => {
+const createCompanyA = async ({
+  name,
+  email,
+  type,
+  address,
+}) => {
   try {
     // eslint-disable-next-line no-unused-vars
-    const driver = await CompaniesA.create({
+    const company = await CompaniesA.create({
       name,
       email,
       type,
       address,
     });
-    return 1;
+    return company;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return 0;
   }
 };
 
-const findAllData = async () => {
+const findAllCompaniesA = async () => {
   const data = await CompaniesA.findAll();
   return data;
 };
 
-const delet = async (id) => CompaniesA.destroy({ where: { id } });
+const updateCompanyA = async (id, data) => {
+  try {
+    const company = await CompaniesA.findByPk(id);
+    if (!company) {
+      return null;  
+    }
+    const updatedCompany = await company.update(data);
+    return updatedCompany; 
+  } catch (error) {
+    console.error('Ошибка при обновлении данных точки отправки:', error);
+    return null;
+  }
+};
+
+const deleteCompanyA = async (id) => CompaniesA.destroy({ where: { id } });
 
 module.exports = {
-  create,
-  findAllData,
-  delet,
+  createCompanyA,
+  findAllCompaniesA,
+  updateCompanyA,
+  deleteCompanyA,
 };

@@ -23,7 +23,6 @@ import ComB from './pages/ComB/ComB';
 import Drivers from './pages/Drivers/Drivers';
 import StatusOrder from './pages/StatusOrder/StatusOrder';
 import Oders from './pages/Orders/Oders';
-import { getDriver } from './redux/action/getDriver';
 import Header from './components/Header/Header';
 import icon from './assets/icon.png'
 import { checkAuth } from './redux/action';
@@ -57,8 +56,6 @@ export default function App() {
   const dispatch = useDispatch();
   const authorized = useSelector(s => s.authorized);
   const [load, setLoad] = useState(false)
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleSidebar = () => setIsOpen(!isOpen);
   const location = useLocation();
   const [expand, setExpand] = React.useState(true);
 
@@ -71,10 +68,10 @@ export default function App() {
     dispatch(authorizedUpdate(true, role))
   }
   useEffect(() => {
-    dispatch(getDriver());
     if (!load) {
       checkAuth(succes);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   console.log(authorized)
   if (!authorized.value) {
