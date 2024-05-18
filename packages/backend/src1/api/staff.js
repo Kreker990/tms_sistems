@@ -172,6 +172,9 @@ const createAdminUser = async () => {
       hashedPassword: hashedPassword,
       role: 'admin',
       salt: salt,
+      name: '',
+      contact: '',
+      password: ''
     });
   }
 };

@@ -8,4 +8,4 @@ export const API_STAFF = API + 'staff';
 export const API_STATUS_ORDER = API + '';
 export const API_COMPANIES_A = API + 'companiesA';
 export const API_COMPANIES_B = API + 'companiesB';
-export const API_ORDERS = API + '';
+export const API_ORDERS = API + 'orders';

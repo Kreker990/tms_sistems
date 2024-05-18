@@ -4,6 +4,8 @@ import getDriverR from "./getDriverR";
 import companiesA from './companiesA';
 import companiesB from './companiesB';
 import staffReducer from "./staff";
+import ordersReducer from "./order";
+import helpersReducer from './helpers'
 
 export const rootReducer = combineReducers({
     authorized: getCheckAdmin,
@@ -11,4 +13,6 @@ export const rootReducer = combineReducers({
     companiesA: companiesA,
     companiesB: companiesB,
     staff: staffReducer,
+    orders: ordersReducer,
+    helpers: helpersReducer,
 })

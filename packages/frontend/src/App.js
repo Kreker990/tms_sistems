@@ -7,7 +7,6 @@ import AuthModal from './components/AuthModal/AuthModal';
 import { useDispatch, useSelector } from 'react-redux';
 import 'rsuite/dist/rsuite.min.css';
 
-
 import { Container, Sidebar, Sidenav, Navbar, Nav } from 'rsuite';
 import AngleLeftIcon from '@rsuite/icons/legacy/AngleLeft';
 import AngleRightIcon from '@rsuite/icons/legacy/AngleRight';
@@ -22,11 +21,11 @@ import ComA from './pages/ComA/ComA';
 import ComB from './pages/ComB/ComB';
 import Drivers from './pages/Drivers/Drivers';
 import StatusOrder from './pages/StatusOrder/StatusOrder';
-import Oders from './pages/Orders/Oders';
 import Header from './components/Header/Header';
 import icon from './assets/icon.png'
 import { checkAuth } from './redux/action';
 import { authorizedUpdate } from './redux/action/authorized';
+import Orders from './pages/Orders/Orders';
 
 const headerStyles = {
   fontSize: 16,
@@ -139,7 +138,7 @@ export default function App() {
               <Route path="/coma" element={<ComA />} />
               <Route path="/comb" element={<ComB />} />
               <Route path="/statosorder" element={<StatusOrder />} />
-              <Route path="/orders" element={<Oders />} />
+              <Route path="/orders" element={<Orders />} />
             </Routes>
           </div>
         </Container>

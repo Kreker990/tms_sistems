@@ -11,7 +11,7 @@ const driver = require('./src1/api/driver');
 const companiesA = require('./src1/api/companiesA');
 const companiesB = require('./src1/api/companiesB');
 const statusOrder = require('./src1/api/statusOrder');
-// const order = require('./src1/api/driver');
+const order = require('./src1/api/order'); 
 
 const PORT = process.env.PORT || 3011;
 
@@ -28,7 +28,7 @@ app.use('/api/v1/driver', driver);
 app.use('/api/v1/companiesa', companiesA);
 app.use('/api/v1/companiesb', companiesB);
 app.use('/api/v1/statusorder', statusOrder);
-// app.use('/api/v1/order', order);
+app.use('/api/v1/orders', order);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin-frontend-dist', 'index.html'));

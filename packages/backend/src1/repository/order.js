@@ -1,36 +1,49 @@
+// repository/order.js
 require('./models');
-const { CompaniesA } = require('./models');
+const { Orders } = require('./models');
 
-const create = async (
-  {
-    name,
-    email,
-    type,
-    address,
-  },
-) => {
+const createOrder = async (orderData) => {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const driver = await CompaniesA.create({
-      name,
-      email,
-      type,
-      address,
-    });
-    return 1;
+    const order = await Orders.create(orderData);
+    return order;
   } catch (error) {
-    console.log(error)
-    return 0;
+    console.error('Ошибка при создании заказа:', error);
+    throw error;
   }
 };
 
-const findAllData = async () => {
-  const data = await CompaniesA.findAll();
+const findAllOrders = async () => {
+  const data = await Orders.findAll();
   return data;
 };
 
+const findOrderById = async (id) => {
+  const order = await Orders.findByPk(id);
+  return order;
+};
+
+const updateOrder = async (id, data) => {
+  try {
+    const order = await Orders.findByPk(id);
+    if (!order) {
+      return null;
+    }
+    const updatedOrder = await order.update(data);
+    return updatedOrder;
+  } catch (error) {
+    console.error('Ошибка при обновлении заказа:', error);
+    throw error;
+  }
+};
+
+const deleteOrder = async (id) => {
+  await Orders.destroy({ where: { id } });
+};
 
 module.exports = {
-  create,
-  findAllData,
+  createOrder,
+  findAllOrders,
+  findOrderById,
+  updateOrder,
+  deleteOrder,
 };

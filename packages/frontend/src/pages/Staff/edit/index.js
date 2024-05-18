@@ -8,14 +8,12 @@ import EyeSlashIcon from '@rsuite/icons/legacy/EyeSlash';
 
 const AddEdit = ({ open, handleClose, data }) => {
   const initialData = {
-    name: '',
-    mail: '',
-    contact: '',
-    role: '',
     ...data,
     password: '',
   };
-  const [formValue, setFormValue] = useState(initialData);
+  console.log(data);
+  
+  const [formValue, setFormValue] = useState(data?.id ? initialData : {name: '', mail: '', role: '', password: '', contact: ''});
   const [visible, setVisible] = useState(false);
   const handleChange = (value, name) => {
     setFormValue(prev => ({ ...prev, [name]: value }));
@@ -33,17 +31,18 @@ const AddEdit = ({ open, handleClose, data }) => {
     <>
       <Modal className="driverEditModal" open={open} onClose={handleClose} size="xs">
         <Modal.Header>
-          <Modal.Title>{data ? `Редактировать водителя: ${data.name}` : 'Добавить нового водителя'}</Modal.Title>
+          <Modal.Title>{data ? `Редактировать сотрудника: ${data.name}` : 'Добавить нового сотрудника'}</Modal.Title>
         </Modal.Header>
         <Form onSubmit={handleSubmit} fluid onChange={setFormValue} formValue={formValue}>
           <Modal.Body className='px-[4px]'>
             <TextField required name="name" label="ФИО" />
-            <TextField required name="contact" value={formValue.contact} label="Номер телефона" placeholder={data?.contact ?? "(555) 333-7777"} mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]} onChange={(value) => handleChange(value, "contact")} />
+            <TextField required name="contact" value={formValue?.contact} label="Номер телефона" placeholder={data?.contact ?? "(555) 333-7777"} mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]} onChange={(value) => handleChange(value, "contact")} />
             <SelectPicker 
               data={[
                 { label: 'Админ', value: 'admin' },
                 { label: 'Менеджер', value: 'manager' }
               ]}
+              name='role'
               value={formValue.role}
               onChange={(value) => handleChange(value, 'role')}
               placeholder="Выберите роль"
