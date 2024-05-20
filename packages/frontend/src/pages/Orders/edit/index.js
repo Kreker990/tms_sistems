@@ -64,7 +64,7 @@ const AddEditOrder = ({ open, handleClose, data }) => {
 
   return (
     <>
-      <Modal className="orderEditModal" open={open} onClose={handleClose} size="xs">
+      <Modal className="orderEditModal" open={open} onClose={handleClose} size='lg'>
         <Modal.Header>
           <Modal.Title>{data ? `Редактировать заказ: ${data.id}` : 'Добавить новый заказ'}</Modal.Title>
         </Modal.Header>
@@ -107,7 +107,7 @@ const AddEditOrder = ({ open, handleClose, data }) => {
               style={{ marginBottom: 20 }}
             />
             <SelectPicker 
-              data={staff.map(item => ({ label: item.name, value: item.id }))}
+              data={staff.filter(el => el.role !== 'admin').map(item => ({ label: item.name, value: item.id }))}
               value={formValue.managerId}
               onChange={(value) => handleChange(value, 'managerId')}
               placeholder="Выберите менеджера"

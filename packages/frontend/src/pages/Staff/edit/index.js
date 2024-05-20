@@ -12,8 +12,8 @@ const AddEdit = ({ open, handleClose, data }) => {
     password: '',
   };
   console.log(data);
-  
-  const [formValue, setFormValue] = useState(data?.id ? initialData : {name: '', mail: '', role: '', password: '', contact: ''});
+
+  const [formValue, setFormValue] = useState(data?.id ? initialData : { name: '', mail: '', role: '', password: '', contact: '' });
   const [visible, setVisible] = useState(false);
   const handleChange = (value, name) => {
     setFormValue(prev => ({ ...prev, [name]: value }));
@@ -21,7 +21,7 @@ const AddEdit = ({ open, handleClose, data }) => {
   const dispatch = useDispatch();
   const handleSubmit = async () => {
     console.log(formValue);
-    
+
     if (data?.id) dispatch(updateStaff({ staffId: data.id, updateData: formValue }))
     else { dispatch(addStaff(formValue)) }
     handleClose();
@@ -37,7 +37,7 @@ const AddEdit = ({ open, handleClose, data }) => {
           <Modal.Body className='px-[4px]'>
             <TextField required name="name" label="ФИО" />
             <TextField required name="contact" value={formValue?.contact} label="Номер телефона" placeholder={data?.contact ?? "(555) 333-7777"} mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]} onChange={(value) => handleChange(value, "contact")} />
-            <SelectPicker 
+            <SelectPicker
               data={[
                 { label: 'Админ', value: 'admin' },
                 { label: 'Менеджер', value: 'manager' }
@@ -52,9 +52,12 @@ const AddEdit = ({ open, handleClose, data }) => {
               style={{ marginBottom: 20 }}
             />
             <TextField placeholder="example@gmail.com" required type="email" name="mail" label="Email" />
-            <InputGroup inside style={{marginBottom: '20px'}}>
-              <Input onChange={(value) => handleChange(value, 'password')} name='password' required type={visible ? 'text' : 'password'} />
-              <InputGroup.Button onClick={()=>setVisible(!visible)}>
+            <InputGroup inside style={{ marginBottom: '20px' }}>
+              {
+                data ? <Input onChange={(value) => handleChange(value, 'password')} name='password' type={visible ? 'text' : 'password'} />
+                  : <Input onChange={(value) => handleChange(value, 'password')} name='password' required type={visible ? 'text' : 'password'} />
+              }
+              <InputGroup.Button onClick={() => setVisible(!visible)}>
                 {visible ? <EyeIcon /> : <EyeSlashIcon />}
               </InputGroup.Button>
             </InputGroup>

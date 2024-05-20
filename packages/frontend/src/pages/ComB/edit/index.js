@@ -24,7 +24,7 @@ const AddEdit = ({ open, handleClose, data }) => {
 
   return (
     <>
-      <Modal className="companyEditModal" open={open} onClose={handleClose} size="xs">
+      <Modal className="companyEditModal" open={open} onClose={handleClose} size="sm">
         <Modal.Header>
           <Modal.Title>{data ? `Редактировать точку доставки: ${data.name}` : 'Добавить новую точку доставки'}</Modal.Title>
         </Modal.Header>
