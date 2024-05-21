@@ -6,6 +6,7 @@ import companiesB from './companiesB';
 import staffReducer from "./staff";
 import ordersReducer from "./order";
 import helpersReducer from './helpers'
+import statusOrderReducer from "./statusOrderR";
 
 export const rootReducer = combineReducers({
     authorized: getCheckAdmin,
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
     staff: staffReducer,
     orders: ordersReducer,
     helpers: helpersReducer,
+    statusOrder: statusOrderReducer,
 })

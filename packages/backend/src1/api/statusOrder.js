@@ -20,14 +20,11 @@ const createHandler = async (req, res) => {
       return res.status(400).json({ errors });
     }
 
-    StatusOrderRepository.create({
+    const statusOrder = await StatusOrderRepository.create({
       key,
       value,
-    }).then((e) => {
-      return res.json('Успешно');
-    }).catch(() => {
-      return res.status(500).json('Внутренняя ошибка БД');
-    });
+    })
+    return res.status(201).json({ message: 'Статус заказа добавлена.', data: statusOrder });
   } catch (error) {
     return res.status(500).json({ message: 'Ошибка', error: error.message });
   }
@@ -52,6 +49,28 @@ const deleteById = async (req, res) => {
   }
 };
 
+// Обновление компании по ID
+const updateHandler = async (req, res) => {
+  const { id } = req.params;
+  const { key, value } = req.body;
+  console.log(id)
+  try { 
+    const updated = await StatusOrderRepository.updateBytId(id, {
+      key,
+      value
+    });
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Данные не найдены' });
+    }
+
+    return res.status(201).json({ message: 'Статус заказа успешно обновлена.', data: updated });
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ message: 'Ошибка при обновлении', error: error.message });
+  }
+};
+
 router.post(
   '/',
   createHandler,
@@ -64,5 +83,6 @@ router.delete(
   '/:id',
   deleteById,
 );
+router.put('/:id', updateHandler);
 
 module.exports = router;

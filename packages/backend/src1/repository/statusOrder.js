@@ -9,14 +9,28 @@ const create = async (
 ) => {
   try {
     // eslint-disable-next-line no-unused-vars
-    const driver = await StatusOrder.create({
+    const status = await StatusOrder.create({
       key,
       value
     });
-    return 1;
+    return status;
   } catch (error) {
     console.log(error)
     return 0;
+  }
+};
+
+const updateBytId = async (id, data) => {
+  try {
+    const statusOrder = await StatusOrder.findByPk(id);
+    if (!statusOrder) {
+      return null;
+    }
+    const updatedCompany = await statusOrder.update(data);
+    return updatedCompany;
+  } catch (error) {
+    console.error('Ошибка при обновлении данных точки отправки:', error);
+    return null;
   }
 };
 
@@ -31,4 +45,5 @@ module.exports = {
   create,
   findAllData,
   delet,
+  updateBytId,
 };

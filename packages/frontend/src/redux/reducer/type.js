@@ -29,3 +29,9 @@ export const GET_ORDER = 'GET_ORDER';
 export const ADD_ORDER = 'ADD_ORDER';
 export const UPDATE_ORDER = 'UPDATE_ORDER';
 export const DELETE_ORDER = 'DELETE_ORDER';
+
+// status Order type
+export const GET_STATUS_ORDER = 'GET_STATUS_ORDER';
+export const ADD_STATUS_ORDER = 'ADD_STATUS_ORDER';
+export const UPDATE_STATUS_ORDER = 'UPDATE_STATUS_ORDER';
+export const DELETE_STATUS_ORDER = 'DELETE_STATUS_ORDER';
