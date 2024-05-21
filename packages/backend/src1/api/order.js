@@ -11,8 +11,7 @@ const router = express.Router();
 
 const createHandler = async (req, res) => {
   try {
-    const { deliveryPointA, deliveryPointB, driverId, status, timeStart, timeEnd, managerId, comment } = req.body;
-
+    const { deliveryPointA, deliveryPointB, driverId, status, timeStart, timeEnd, managerId, comment, price } = req.body;
     // Проверяем существование связанных объектов
     const deliveryPointAExists = await CompaniesA.findByPk(deliveryPointA);
     const deliveryPointBExists = await CompaniesB.findByPk(deliveryPointB);
@@ -32,7 +31,8 @@ const createHandler = async (req, res) => {
       timeStart,
       timeEnd,
       managerId,
-      comment
+      comment,
+      price,
     };
 
     const order = await OrdersRepository.createOrder(newOrder);
@@ -70,7 +70,7 @@ const getByIdHandler = async (req, res) => {
 const updateHandler = async (req, res) => {
   try {
     const { id } = req.params;
-    const { deliveryPointA, deliveryPointB, driverId, status, timeStart, timeEnd, managerId, comment } = req.body;
+    const { deliveryPointA, deliveryPointB, driverId, status, timeStart, timeEnd, managerId, comment, price } = req.body;
 
     // Проверяем существование связанных объектов
     const deliveryPointAExists = await CompaniesA.findByPk(deliveryPointA);
@@ -91,7 +91,8 @@ const updateHandler = async (req, res) => {
       timeStart,
       timeEnd,
       managerId,
-      comment
+      comment,
+      price
     });
 
     if (!updatedOrder) {

@@ -61,6 +61,10 @@ const Orders = db.sequelize.define('Orders', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  price: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
 });
 
 module.exports = {

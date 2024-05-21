@@ -1,6 +1,6 @@
 // repository/order.js
 require('./models');
-const { Orders } = require('./models');
+const { Orders, StatusOrder, CompaniesA, CompaniesB, Drivers, Staff } = require('./models');
 
 const createOrder = async (orderData) => {
   try {
@@ -13,7 +13,35 @@ const createOrder = async (orderData) => {
 };
 
 const findAllOrders = async () => {
-  const data = await Orders.findAll();
+  const data = await Orders.findAll({
+    include: [
+      {
+        model: StatusOrder,
+        attributes: ['id', 'key', 'value'],
+        as: 'statusorder',
+      },
+      {
+        model: CompaniesA,
+        attributes: ['id', 'name', 'address'],
+        as: 'a',
+      },
+      {
+        model: CompaniesB,
+        attributes: ['id', 'name', 'address'],
+        as: 'b',
+      },
+      {
+        model: Drivers,
+        attributes: ['id', 'name', 'carNumber', 'contact'],
+        as: 'driver',
+      },
+      {
+        model: Staff,
+        attributes: ['id', 'name', 'contact'],
+        as: 'staff',
+      },
+    ],
+  });
   return data;
 };
 

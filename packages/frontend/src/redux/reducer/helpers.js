@@ -1,11 +1,12 @@
 // redux/reducer/helpers.js
-import { GET_COMPANIES_A, GET_COMPANIES_B, GET_DRIVER, GET_STAFF } from "./type";
+import { GET_COMPANIES_A, GET_COMPANIES_B, GET_DRIVER, GET_STAFF, GET_STATUS_ORDER } from "./type";
 
 const initialState = {
     companiesA: [],
     companiesB: [],
     drivers: [],
-    staff: []
+    staff: [],
+    statusOrders: [],
 };
 
 const helpersReducer = (state = initialState, action) => {
@@ -29,6 +30,11 @@ const helpersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 staff: action.payload
+            };
+        case GET_STATUS_ORDER:
+            return {
+                ...state,
+                statusOrders: action.payload
             };
         default:
             return state;

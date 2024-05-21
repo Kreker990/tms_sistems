@@ -4,7 +4,7 @@ import { Form, Button, Modal, SelectPicker, DatePicker } from 'rsuite';
 import { useDispatch, useSelector } from 'react-redux';
 import TextField from '../../../components/TextField';
 import { addOrder, updateOrder } from '../../../redux/action/order';
-import { getCompaniesA, getCompaniesB, getDrivers, getStaff } from '../../../redux/action/helpers';
+import { getCompaniesA, getCompaniesB, getDrivers, getStaff, getStatusOrder } from '../../../redux/action/helpers';
 
 const AddEditOrder = ({ open, handleClose, data }) => {
   const initialData = {
@@ -16,16 +16,9 @@ const AddEditOrder = ({ open, handleClose, data }) => {
     timeEnd: data?.timeEnd ? new Date(data.timeEnd) : null,
     managerId: '',
     comment: '',
+    price: '',
     ...data,
   };
-
-  // Константы для статусов заказов
-  const statusOrders = [
-    { id: 1, name: 'Отправляется' },
-    { id: 2, name: 'В процессе' },
-    { id: 3, name: 'Завершено' },
-    { id: 4, name: 'Отменено' }
-  ];
 
   const [formValue, setFormValue] = useState(initialData);
 
@@ -35,12 +28,14 @@ const AddEditOrder = ({ open, handleClose, data }) => {
   const companiesB = useSelector(state => state.helpers.companiesB);
   const drivers = useSelector(state => state.helpers.drivers);
   const staff = useSelector(state => state.helpers.staff);
+  const statusOrders = useSelector(state => state.helpers.statusOrders);
 
   useEffect(() => {
     dispatch(getCompaniesA());
     dispatch(getCompaniesB());
     dispatch(getDrivers());
     dispatch(getStaff());
+    dispatch(getStatusOrder());
   }, [dispatch]);
 
   const handleChange = (value, name) => {
@@ -70,7 +65,7 @@ const AddEditOrder = ({ open, handleClose, data }) => {
         </Modal.Header>
         <Form onSubmit={handleSubmit} fluid onChange={setFormValue} formValue={formValue}>
           <Modal.Body className='px-[4px]'>
-            <SelectPicker 
+            <SelectPicker
               data={companiesA.map(item => ({ label: item.name, value: item.id }))}
               value={formValue.deliveryPointA}
               onChange={(value) => handleChange(value, 'deliveryPointA')}
@@ -79,7 +74,7 @@ const AddEditOrder = ({ open, handleClose, data }) => {
               required
               style={{ marginBottom: 20 }}
             />
-            <SelectPicker 
+            <SelectPicker
               data={companiesB.map(item => ({ label: item.name, value: item.id }))}
               value={formValue.deliveryPointB}
               onChange={(value) => handleChange(value, 'deliveryPointB')}
@@ -88,7 +83,7 @@ const AddEditOrder = ({ open, handleClose, data }) => {
               required
               style={{ marginBottom: 20 }}
             />
-            <SelectPicker 
+            <SelectPicker
               data={drivers.map(item => ({ label: item.name, value: item.id }))}
               value={formValue.driverId}
               onChange={(value) => handleChange(value, 'driverId')}
@@ -97,8 +92,8 @@ const AddEditOrder = ({ open, handleClose, data }) => {
               required
               style={{ marginBottom: 20 }}
             />
-            <SelectPicker 
-              data={statusOrders.map(item => ({ label: item.name, value: item.id }))}
+            <SelectPicker
+              data={statusOrders.map(item => ({ label: item.value, value: item.id }))}
               value={formValue.status}
               onChange={(value) => handleChange(value, 'status')}
               placeholder="Выберите статус"
@@ -106,7 +101,7 @@ const AddEditOrder = ({ open, handleClose, data }) => {
               required
               style={{ marginBottom: 20 }}
             />
-            <SelectPicker 
+            <SelectPicker
               data={staff.filter(el => el.role !== 'admin').map(item => ({ label: item.name, value: item.id }))}
               value={formValue.managerId}
               onChange={(value) => handleChange(value, 'managerId')}
@@ -115,31 +110,39 @@ const AddEditOrder = ({ open, handleClose, data }) => {
               required
               style={{ marginBottom: 20 }}
             />
-            <DatePicker 
-              name="timeStart" 
-              label="Дата начала" 
-              value={formValue.timeStart} 
-              onChange={(value) => handleChange(value, 'timeStart')}
-              oneTap
-              block
-              required
-              style={{ marginBottom: 20 }}
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '30px'}}>
+              <DatePicker
+                name="timeStart"
+                label="Дата начала"
+                value={formValue.timeStart}
+                onChange={(value) => handleChange(value, 'timeStart')}
+                oneTap
+                block
+                required
+                style={{ marginBottom: 20 }}
+              />
+              <DatePicker
+                name="timeEnd"
+                label="Дата окончания"
+                value={formValue.timeEnd}
+                onChange={(value) => handleChange(value, 'timeEnd')}
+                oneTap
+                block
+                required
+                style={{ marginBottom: 20 }}
+              />
+            </div>
+            <TextField
+              name="comment"
+              label="Комментарий"
+              value={formValue.comment}
+              onChange={(value) => handleChange(value, 'comment')}
             />
-            <DatePicker 
-              name="timeEnd" 
-              label="Дата окончания" 
-              value={formValue.timeEnd} 
-              onChange={(value) => handleChange(value, 'timeEnd')}
-              oneTap
-              block
-              required
-              style={{ marginBottom: 20 }}
-            />
-            <TextField 
-              name="comment" 
-              label="Комментарий" 
-              value={formValue.comment} 
-              onChange={(value) => handleChange(value, 'comment')} 
+            <TextField
+              name="price"
+              label="Цена"
+              value={formValue.price}
+              onChange={(value) => handleChange(value, 'price')}
             />
           </Modal.Body>
           <Modal.Footer>

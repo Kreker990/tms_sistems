@@ -5,17 +5,17 @@ const { CompaniesB } = require('./companiesB');
 const { Staff } = require('./staff');
 const { StatusOrder } = require('./statusOrder');
 
-Orders.belongsTo(Staff, { foreignKey: 'staffId', as: 'staff' });
-Orders.belongsTo(CompaniesA, { foreignKey: 'staffId', as: 'a' });
-Orders.belongsTo(CompaniesB, { foreignKey: 'staffId', as: 'b' });
+Orders.belongsTo(Staff, { foreignKey: 'managerId', as: 'staff' });
+Orders.belongsTo(CompaniesA, { foreignKey: 'deliveryPointA', as: 'a' });
+Orders.belongsTo(CompaniesB, { foreignKey: 'deliveryPointB', as: 'b' });
 Orders.belongsTo(Drivers, { foreignKey: 'driverId', as: 'driver' });
-Orders.belongsTo(StatusOrder, { foreignKey: 'driverId', as: 'statusorder' });
+Orders.belongsTo(StatusOrder, { foreignKey: 'status', as: 'statusorder' });
 
 Staff.hasMany(Orders, { foreignKey: 'staffId', as: 'orders' });
 Drivers.hasMany(Orders, { foreignKey: 'driverId', as: 'orders' });
-CompaniesA.hasMany(Orders, { foreignKey: 'driverId', as: 'orders' });
-CompaniesB.hasMany(Orders, { foreignKey: 'driverId', as: 'orders' });
-StatusOrder.hasMany(Orders, { foreignKey: 'driverId', as: 'orders' });
+CompaniesA.hasMany(Orders, { foreignKey: 'deliveryPointA', as: 'orders' });
+CompaniesB.hasMany(Orders, { foreignKey: 'deliveryPointB', as: 'orders' });
+StatusOrder.hasMany(Orders, { foreignKey: 'status', as: 'orders' });
 
 module.exports = {
   Drivers,

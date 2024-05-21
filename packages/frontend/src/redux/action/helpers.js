@@ -1,6 +1,6 @@
 // redux/action/helpers.js
-import { GET_COMPANIES_A, GET_COMPANIES_B, GET_DRIVER, GET_STAFF } from "../reducer/type";
-import { API_COMPANIES_A, API_COMPANIES_B, API_DRIVERS, API_STAFF } from "../config";
+import { GET_COMPANIES_A, GET_COMPANIES_B, GET_DRIVER, GET_STAFF, GET_STATUS_ORDER } from "../reducer/type";
+import { API_COMPANIES_A, API_COMPANIES_B, API_DRIVERS, API_STAFF, API_STATUS_ORDER } from "../config";
 import toast from "react-hot-toast";
 
 // Получение всех точек доставки A
@@ -64,6 +64,24 @@ export const getStaff = () => async (dispatch) => {
         const resData = await response.json();
         dispatch({
             type: GET_STAFF,
+            payload: resData
+        });
+    } catch (error) {
+        toast.error(error.message);
+    }
+};
+
+// Получение статусов заказа
+export const getStatusOrder = () => async (dispatch) => {
+    try {
+        const response = await fetch(API_STATUS_ORDER);
+        if (!response.ok) {
+            throw new Error('Ошибка при загрузке данных о статусах заказа');
+        }
+        const resData = await response.json();
+        console.log(resData)
+        dispatch({
+            type: GET_STATUS_ORDER,
             payload: resData
         });
     } catch (error) {

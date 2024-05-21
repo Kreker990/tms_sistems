@@ -51,6 +51,7 @@ export const addOrder = (orderData) => async (dispatch) => {
             throw new Error('Не удалось добавить заказ');
         }
         const resData = await response.json();
+        dispatch(getOrders());
         dispatch({
             type: ADD_ORDER,
             payload: resData,

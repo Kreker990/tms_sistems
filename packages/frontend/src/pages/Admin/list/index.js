@@ -1,11 +1,8 @@
-// components/orders/List.js
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'rsuite';
 import { useDispatch, useSelector } from 'react-redux';
-import AddEditOrder from '../edit/index';
-import DelPopup from '../../../components/DelPopup';
-import { MdDeleteOutline, MdEdit, MdOutlineAdd } from "react-icons/md";
-import { getOrders, deleteOrder } from '../../../redux/action/order';
+import { MdOutlineAdd } from "react-icons/md";
+import { getOrders } from '../../../redux/action/order';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -14,7 +11,6 @@ export const List = () => {
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [delOpen, setDelOpen] = useState(false);
   const [orderData, setOrderData] = useState(null);
   const dispatch = useDispatch();
   const orders = useSelector(state => state.orders.orders);
@@ -24,35 +20,19 @@ export const List = () => {
     dispatch(getOrders());
   }, [dispatch]);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleOpen = () => {
     setOpen(true);
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteOrder(id));
-    setDelOpen(false);
-  };
-
   const getData = () => {
     if (sortColumn && sortType) {
-      return orders.sort((a, b) => {
+      return [...orders].sort((a, b) => {
         let x = a[sortColumn];
         let y = b[sortColumn];
-        if (typeof x === 'string') {
-          x = x.charCodeAt();
+        if (typeof x === 'string' && typeof y === 'string') {
+          return sortType === 'asc' ? x.localeCompare(y) : y.localeCompare(x);
         }
-        if (typeof y === 'string') {
-          y = y.charCodeAt();
-        }
-        if (sortType === 'asc') {
-          return x - y;
-        } else {
-          return y - x;
-        }
+        return sortType === 'asc' ? x - y : y - x;
       });
     }
     return orders;
@@ -66,17 +46,11 @@ export const List = () => {
       setSortType(sortType);
     }, 500);
   };
-  console.log(getData(), '-----')
+
   return (
     <>
       <div className='flex justify-between items-center'>
-        <h5 className='table-title'>Заказы</h5>
-        {authorized.role === "admin" && <Button onClick={() => {
-          setOrderData(null);
-          handleOpen();
-        }} className='createButton' appearance="primary" endIcon={<MdOutlineAdd color='#fff' size={20} />}>
-          Добавить
-        </Button>}
+        <h5 className='table-title'>Новые заказы</h5>
       </div>
       <div>
         <Table
@@ -87,7 +61,7 @@ export const List = () => {
           sortType={sortType}
           onSortColumn={handleSortColumn}
           loading={loading}
-          minwidth={500}
+          minWidth={500}
           style={{ width: '100%', maxHeight: '450px' }}
           locale={{
             emptyMessage: 'Данные не найдены',
@@ -131,33 +105,8 @@ export const List = () => {
             <HeaderCell>Цена</HeaderCell>
             <Cell dataKey="price" />
           </Column>
-
-          {authorized.role === "admin" && <Column fixed="right" width={100}>
-            <HeaderCell className='text-center'>Действия</HeaderCell>
-
-            <Cell style={{ padding: '6px' }}>
-              {rowData => (
-                <div className='flex justify-between items-center'>
-                  <Button className='withoutButton' appearance="default" onClick={() => {
-                    setOrderData(rowData);
-                    handleOpen();
-                  }}>
-                    <MdEdit color='#1caf68' size={20} />
-                  </Button>
-                  <Button className='withoutButton' appearance="default" onClick={() => {
-                    setOrderData(rowData);
-                    setDelOpen(true);
-                  }}>
-                    <MdDeleteOutline color='rgb(210 54 54)' size={20} />
-                  </Button>
-                </div>
-              )}
-            </Cell>
-          </Column>}
         </Table>
       </div>
-      {open && <AddEditOrder handleClose={handleClose} open={open} data={orderData} />}
-      {delOpen && <DelPopup handleDelete={() => handleDelete(orderData.id)} handleClose={() => setDelOpen(false)} open={delOpen} text={`Заказ ${orderData.id}`} />}
     </>
   );
 };
