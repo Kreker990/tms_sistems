@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table } from 'rsuite';
+import { Table } from 'rsuite';
 import { useDispatch, useSelector } from 'react-redux';
-import { MdOutlineAdd } from "react-icons/md";
 import { getOrders } from '../../../redux/action/order';
 
 const { Column, HeaderCell, Cell } = Table;
@@ -10,19 +9,12 @@ export const List = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [orderData, setOrderData] = useState(null);
   const dispatch = useDispatch();
   const orders = useSelector(state => state.orders.orders);
-  const authorized = useSelector(state => state.authorized);
 
   useEffect(() => {
     dispatch(getOrders());
   }, [dispatch]);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
 
   const getData = () => {
     if (sortColumn && sortType) {
@@ -72,36 +64,36 @@ export const List = () => {
             <Cell dataKey="id" />
           </Column>
 
-          <Column flexGrow={1} fixed sortable>
+          <Column flexGrow={1} fixed>
             <HeaderCell>Точка доставки A</HeaderCell>
             <Cell dataKey="a.name" />
           </Column>
 
-          <Column flexGrow={1} sortable>
+          <Column flexGrow={1}>
             <HeaderCell>Точка доставки B</HeaderCell>
             <Cell dataKey="b.name" />
           </Column>
 
-          <Column flexGrow={1} sortable>
+          <Column flexGrow={1}>
             <HeaderCell>Водитель</HeaderCell>
             <Cell dataKey="driver.name" />
           </Column>
 
-          <Column flexGrow={1} sortable>
+          <Column flexGrow={1}>
             <HeaderCell>Статус</HeaderCell>
             <Cell dataKey="statusorder.value" />
           </Column>
 
-          <Column flexGrow={1} sortable>
+          <Column flexGrow={1}>
             <HeaderCell>Менеджер</HeaderCell>
             <Cell dataKey="staff.name" />
           </Column>
 
-          <Column flexGrow={1} sortable>
+          <Column flexGrow={1}>
             <HeaderCell>Комментарий</HeaderCell>
             <Cell dataKey="comment" />
           </Column>
-          <Column flexGrow={1} sortable>
+          <Column flexGrow={1}>
             <HeaderCell>Цена</HeaderCell>
             <Cell dataKey="price" />
           </Column>

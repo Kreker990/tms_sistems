@@ -72,7 +72,7 @@ export default function App() {
       checkAuth(succes);
     }
     dispatch(getOrders());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   console.log(authorized)
   if (!authorized.value) {
@@ -118,11 +118,9 @@ export default function App() {
                     Статус заказов
                   </Nav.Item>
                 }
-                {authorized.role === "admin" &&
-                  <Nav.Item eventKey="/staff" icon={<AdminIcon />}>
-                    Персонал
-                  </Nav.Item>
-                }
+                <Nav.Item eventKey="/staff" icon={<AdminIcon />}>
+                  Персонал
+                </Nav.Item>
 
               </Nav>
             </Sidenav.Body>

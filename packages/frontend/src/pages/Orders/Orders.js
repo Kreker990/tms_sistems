@@ -7,7 +7,6 @@ import { getOrders } from '../../redux/action/order';
 export default function Orders() {
   const orders = useSelector(s => s.orders);
   const dispatch = useDispatch();
-  console.log(orders);
   
   useEffect(() => {
     dispatch(getOrders());

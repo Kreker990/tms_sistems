@@ -1,4 +1,4 @@
-import { Button, Table } from 'rsuite';
+import { Button, Table, SelectPicker } from 'rsuite';
 import { useState } from 'react';
 import AddEdit from '../edit';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { deleteDriver } from '../../../redux/action/getDriver';
 import DelPopup from '../../../components/DelPopup';
 import { MdDeleteOutline, MdEdit, MdOutlineAdd } from "react-icons/md";
 import styles from './index.module.css';
+import { dateRanges, filterOrdersByDate } from '../../../components/DateR';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -19,6 +20,7 @@ export const List = ({ data }) => {
   const [delOpen, setDelOpen] = useState(false);
   const [driverData, setData] = useState(null);
   const dispatch = useDispatch();
+  const [dateRange, setDateRange] = useState('allTime');
   const authorized = useSelector(s => s.authorized);
 
   const handleClose = () => {
@@ -156,18 +158,27 @@ export const List = ({ data }) => {
           : <>
             <div className='flex justify-between items-center'>
               <h5 className='table-title'>{driverMore.name} (заказы)</h5>
-              {authorized.role === "admin" && <Button onClick={() => {
-                setData(null);
-                setDriverInfo(false)
-              }} className='createButton' appearance="primary">
-                Назад к таблице водителей
-              </Button>}
+              <div>
+                <SelectPicker
+                  data={dateRanges}
+                  value={dateRange}
+                  onChange={setDateRange}
+                  placeholder="Выберите временной диапазон"
+                  style={{ width: 224, marginRight: '16px' }}
+                />
+                {authorized.role === "admin" && <Button onClick={() => {
+                  setData(null);
+                  setDriverInfo(false)
+                }} className='createButton' appearance="primary">
+                  Назад к таблице водителей
+                </Button>}
+              </div>
             </div>
             <div>
               <Table
                 height={100 + (data.length * 40)}
                 className='mt-[20px]'
-                data={driverMore.orders}
+                data={filterOrdersByDate(driverMore.orders, dateRange)}
                 sortColumn={sortColumn}
                 sortType={sortType}
                 onSortColumn={handleSortColumn}
@@ -219,6 +230,16 @@ export const List = ({ data }) => {
                 <Column flexGrow={1} >
                   <HeaderCell>Комментарий</HeaderCell>
                   <Cell dataKey="comment" />
+                </Column>
+                <Column flexGrow={1} >
+                  <HeaderCell>время</HeaderCell>
+                  <Cell>
+                    {rowData => (
+                      <div className={styles.scrollable_cell}>
+                        <div>{rowData.timeStart} \ {rowData.timeEnd}</div>
+                      </div>
+                    )}
+                  </Cell>
                 </Column>
                 <Column flexGrow={1} >
                   <HeaderCell>Цена</HeaderCell>

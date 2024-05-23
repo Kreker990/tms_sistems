@@ -12,15 +12,17 @@ const AddEditOrder = ({ open, handleClose, data }) => {
     deliveryPointB: '',
     driverId: '',
     status: '',
-    timeStart: data?.timeStart ? new Date(data.timeStart) : null,
-    timeEnd: data?.timeEnd ? new Date(data.timeEnd) : null,
     managerId: '',
     comment: '',
     price: '',
     ...data,
   };
 
-  const [formValue, setFormValue] = useState(initialData);
+  const [formValue, setFormValue] = useState({
+    ...initialData,
+    timeStart: data?.timeStart ? new Date(data.timeStart) : null,
+    timeEnd: data?.timeEnd ? new Date(data.timeEnd) : null,
+  });
 
   const dispatch = useDispatch();
 
@@ -110,7 +112,7 @@ const AddEditOrder = ({ open, handleClose, data }) => {
               required
               style={{ marginBottom: 20 }}
             />
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '30px'}}>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '30px' }}>
               <DatePicker
                 name="timeStart"
                 label="Дата начала"
@@ -142,6 +144,7 @@ const AddEditOrder = ({ open, handleClose, data }) => {
               name="price"
               label="Цена"
               value={formValue.price}
+              required={data?.id ? false : true}
               onChange={(value) => handleChange(value, 'price')}
             />
           </Modal.Body>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { getOrders } from '../../redux/action/order';
+import { useSelector } from 'react-redux';
 import { BsCartXFill, BsFillCartCheckFill } from "react-icons/bs";
 import { FaTruckMoving } from "react-icons/fa6";
 import { MdPriceChange } from "react-icons/md";
@@ -9,8 +8,6 @@ import { List } from './list';
 
 export default function Admin() {
   const orders = useSelector(s => s.orders);
-  const dispatch = useDispatch();
-  const [check, setcheck] = useState(false)
   const [totalAmount, setTotalAmount] = useState(0);
   const [newCount, setNewCount] = useState(0);
   const [canceledCount, setCanceledCount] = useState(0);
@@ -39,7 +36,6 @@ export default function Admin() {
       setNewCount(newOrders);
       setCanceledCount(canceledOrders);
       setCompletedOrdersCount(completedOrders);
-      setcheck(true)
     }
     update();
   }, [orders])
@@ -64,7 +60,7 @@ export default function Admin() {
           <label>Общая сумма: {totalAmount.toFixed(2)} сом</label>
         </div>
         <div className={styles.orderSummaryCard}>
-          <MdPriceChange size={50} color='#1c7cb0' />
+          <MdPriceChange size={50} color='#55a64c' />
           <label>Выручка: {(totalAmount * 0.20).toFixed(2)} сом</label>
         </div>
       </div>

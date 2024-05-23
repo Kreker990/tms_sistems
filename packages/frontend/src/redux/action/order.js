@@ -76,6 +76,7 @@ export const updateOrder = ({ orderId, updateData }) => async (dispatch) => {
             throw new Error('Не удалось обновить данные заказа');
         }
         const resData = await response.json();
+        dispatch(getOrders());
         dispatch({
             type: UPDATE_ORDER,
             payload: resData.data,

@@ -1,4 +1,4 @@
-import { Button, Table } from 'rsuite';
+import { Button, Table, SelectPicker } from 'rsuite';
 import { useState } from 'react';
 import AddEdit from '../edit';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import DelPopup from '../../../components/DelPopup';
 import { MdDeleteOutline, MdEdit, MdOutlineAdd } from "react-icons/md";
 import { deleteStaff } from '../../../redux/action/staff';
 import styles from './index.module.css';
+import { dateRanges, filterOrdersByDate } from '../../../components/DateR';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -19,6 +20,7 @@ export const List = ({ data }) => {
   const [managerMore, setManagerMore] = useState({})
   const [comBData, setData] = useState(null);
   const dispatch = useDispatch();
+  const [dateRange, setDateRange] = useState('allTime');
   const authorized = useSelector(s => s.authorized);
 
   const handleClose = () => {
@@ -33,8 +35,12 @@ export const List = ({ data }) => {
   };
 
   const getData = () => {
+    let filteredData
+    if (authorized !== 'admin') {
+      filteredData = data.filter(order => order.role === 'manager');
+    }
     if (sortColumn && sortType) {
-      return data.sort((a, b) => {
+      return filteredData.sort((a, b) => {
         let x = a[sortColumn];
         let y = b[sortColumn];
         if (typeof x === 'string') {
@@ -50,7 +56,7 @@ export const List = ({ data }) => {
         }
       });
     }
-    return data;
+    return filteredData;
   };
 
   const handleSortColumn = (sortColumn, sortType) => {
@@ -157,17 +163,26 @@ export const List = ({ data }) => {
           <>
             <div className='flex justify-between items-center'>
               <h5 className='table-title'>{managerMore?.name || managerMore.mail} ({managerMore.role})</h5>
-              {authorized.role === "admin" && <Button onClick={() => {
-                setManagerInfo(false)
-              }} className='createButton' appearance="primary" >
-                Назад к списку персонала
-              </Button>}
+              <div>
+                <SelectPicker
+                  data={dateRanges}
+                  value={dateRange}
+                  onChange={setDateRange}
+                  placeholder="Выберите временной диапазон"
+                  style={{ width: 224, marginRight: '16px' }}
+                />
+                {authorized.role === "admin" && <Button onClick={() => {
+                  setManagerInfo(false)
+                }} className='createButton' appearance="primary" >
+                  Назад к списку персонала
+                </Button>}
+              </div>
             </div>
             <div>
               <Table
                 height={100 + (data?.length * 40)}
                 className='mt-[20px]'
-                data={managerMore.orders}
+                data={filterOrdersByDate(managerMore.orders, dateRange)}
                 sortColumn={sortColumn}
                 sortType={sortType}
                 onSortColumn={handleSortColumn}
@@ -218,6 +233,16 @@ export const List = ({ data }) => {
                 <Column flexGrow={1} >
                   <HeaderCell>Комментарий</HeaderCell>
                   <Cell dataKey="comment" />
+                </Column>
+                <Column flexGrow={1} >
+                  <HeaderCell>время</HeaderCell>
+                  <Cell>
+                    {rowData => (
+                      <div className={styles.scrollable_cell}>
+                        <div>{rowData.timeStart} \ {rowData.timeEnd}</div>
+                      </div>
+                    )}
+                  </Cell>
                 </Column>
                 <Column flexGrow={1} >
                   <HeaderCell>Цена</HeaderCell>
