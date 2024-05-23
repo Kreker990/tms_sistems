@@ -40,7 +40,7 @@ const findAllData = async () => {
   const data = await Staff.findAll({
     include: {
       model: Orders,
-      attributes: ['id', 'price'],
+      attributes: ['id', 'price', 'timeStart', 'comment', 'timeEnd'],
       as: 'orders',
       include: [
         {

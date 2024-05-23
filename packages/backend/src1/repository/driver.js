@@ -30,14 +30,14 @@ const findAllData = async () => {
   const data = await Drivers.findAll({
     include: {
       model: Orders,
-      attributes: ['id', 'price'],
+      attributes: ['id', 'price', 'timeStart', 'comment', 'timeEnd'],
       as: 'orders',
       include: [
         {
           model: StatusOrder,
           attributes: ['id', 'key', 'value'],
           as: 'statusorder',
-        },{
+        }, {
           model: CompaniesA,
           attributes: ['id', 'name', 'address'],
           as: 'a',
