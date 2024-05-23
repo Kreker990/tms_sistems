@@ -226,7 +226,7 @@ export const List = ({ data }) => {
                 </Column>
 
                 <Column flexGrow={1} >
-                  <HeaderCell>Менеджер</HeaderCell>
+                  <HeaderCell>Водитель</HeaderCell>
                   <Cell dataKey="driver.name" />
                 </Column>
 
