@@ -1,5 +1,5 @@
 require('./models');
-const { Drivers, Orders } = require('./models');
+const { Drivers, Orders, StatusOrder, CompaniesA, CompaniesB, Staff } = require('./models');
 
 const create = async (
   {
@@ -32,6 +32,27 @@ const findAllData = async () => {
       model: Orders,
       attributes: ['id', 'price'],
       as: 'orders',
+      include: [
+        {
+          model: StatusOrder,
+          attributes: ['id', 'key', 'value'],
+          as: 'statusorder',
+        },{
+          model: CompaniesA,
+          attributes: ['id', 'name', 'address'],
+          as: 'a',
+        },
+        {
+          model: CompaniesB,
+          attributes: ['id', 'name', 'address'],
+          as: 'b',
+        },
+        {
+          model: Staff,
+          attributes: ['id', 'name', 'contact'],
+          as: 'staff',
+        },
+      ]
     },
   });
   return data;

@@ -26,6 +26,7 @@ import icon from './assets/icon.png'
 import { checkAuth } from './redux/action';
 import { authorizedUpdate } from './redux/action/authorized';
 import Orders from './pages/Orders/Orders';
+import { getOrders } from './redux/action/order';
 
 const headerStyles = {
   fontSize: 16,
@@ -70,6 +71,7 @@ export default function App() {
     if (!load) {
       checkAuth(succes);
     }
+    dispatch(getOrders());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   console.log(authorized)

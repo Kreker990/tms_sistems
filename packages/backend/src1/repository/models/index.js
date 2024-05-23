@@ -11,7 +11,7 @@ Orders.belongsTo(CompaniesB, { foreignKey: 'deliveryPointB', as: 'b' });
 Orders.belongsTo(Drivers, { foreignKey: 'driverId', as: 'driver' });
 Orders.belongsTo(StatusOrder, { foreignKey: 'status', as: 'statusorder' });
 
-Staff.hasMany(Orders, { foreignKey: 'staffId', as: 'orders' });
+Staff.hasMany(Orders, { foreignKey: 'managerId', as: 'orders' });
 Drivers.hasMany(Orders, { foreignKey: 'driverId', as: 'orders' });
 CompaniesA.hasMany(Orders, { foreignKey: 'deliveryPointA', as: 'orders' });
 CompaniesB.hasMany(Orders, { foreignKey: 'deliveryPointB', as: 'orders' });

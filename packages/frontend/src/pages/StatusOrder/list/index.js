@@ -87,7 +87,7 @@ export const List = ({ data }) => {
           sortType={sortType}
           onSortColumn={handleSortColumn}
           loading={loading}
-          minWidth={500}
+          minwidth={500}
           style={{ width: '100%', maxHeight: '450px' }}
           locale={{
             emptyMessage: 'Данные не найдены',

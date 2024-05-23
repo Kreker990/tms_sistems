@@ -17,7 +17,6 @@ export default function Admin() {
   const [completedOrdersCount, setCompletedOrdersCount] = useState(0);
 
   useEffect(() => {
-    dispatch(getOrders());
     const update = () => {
       let total = 0;
       let newOrders = 0;
@@ -42,20 +41,18 @@ export default function Admin() {
       setCompletedOrdersCount(completedOrders);
       setcheck(true)
     }
-    if (!check) {
-      update();
-    }
-  }, [])
+    update();
+  }, [orders])
   return (
     <div className={styles.orderSummary}>
       <h2>Обзор заказов</h2>
       <div className={styles.orderSummaryCards}>
         <div className={styles.orderSummaryCard}>
-          <BsCartXFill size={50} color='#55a64c' />
+          <BsFillCartCheckFill size={50} color='#55a64c' />
           <label>Завершенные: {completedOrdersCount}</label>
         </div>
         <div className={styles.orderSummaryCard}>
-          <BsFillCartCheckFill size={50} color='#ab1b1e' />
+          <BsCartXFill size={50} color='#ab1b1e' />
           <label>Отмененные: {canceledCount}</label>
         </div>
         <div className={styles.orderSummaryCard}>
@@ -64,7 +61,11 @@ export default function Admin() {
         </div>
         <div className={styles.orderSummaryCard}>
           <MdPriceChange size={50} color='#1c7cb0' />
-          <label>Общая сумма: {totalAmount}</label>
+          <label>Общая сумма: {totalAmount.toFixed(2)} сом</label>
+        </div>
+        <div className={styles.orderSummaryCard}>
+          <MdPriceChange size={50} color='#1c7cb0' />
+          <label>Выручка: {(totalAmount * 0.20).toFixed(2)} сом</label>
         </div>
       </div>
       <List data={orders} />
