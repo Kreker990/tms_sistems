@@ -35,10 +35,10 @@ export const List = ({ data }) => {
   };
 
   const getData = () => {
-    let filteredData
-    if (authorized !== 'admin') {
+    let filteredData = data
+    if (authorized.role !== 'admin') {
       filteredData = data.filter(order => order.role === 'manager');
-    }
+    } 
     if (sortColumn && sortType) {
       return filteredData.sort((a, b) => {
         let x = a[sortColumn];
@@ -98,7 +98,7 @@ export const List = ({ data }) => {
               minwidth={500}
               style={{ width: '100%', maxHeight: '450px' }}
               locale={{
-                emptyMessage: 'Нету заказов',
+                emptyMessage: 'Нету пользователей',
               }}
               rowClassName={() => 'clickable-row'}
               onRowClick={knowManagerMore}
