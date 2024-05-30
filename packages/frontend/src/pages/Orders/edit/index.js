@@ -27,14 +27,12 @@ const AddEditOrder = ({ open, handleClose, data }) => {
   const dispatch = useDispatch();
 
   const companiesA = useSelector(state => state.helpers.companiesA);
-  const companiesB = useSelector(state => state.helpers.companiesB);
   const drivers = useSelector(state => state.helpers.drivers);
   const staff = useSelector(state => state.helpers.staff);
   const statusOrders = useSelector(state => state.helpers.statusOrders);
 
   useEffect(() => {
     dispatch(getCompaniesA());
-    dispatch(getCompaniesB());
     dispatch(getDrivers());
     dispatch(getStaff());
     dispatch(getStatusOrder());
@@ -71,16 +69,16 @@ const AddEditOrder = ({ open, handleClose, data }) => {
               data={companiesA.map(item => ({ label: item.name, value: item.id }))}
               value={formValue.deliveryPointA}
               onChange={(value) => handleChange(value, 'deliveryPointA')}
-              placeholder="Выберите точку доставки A"
+              placeholder="Выберите точку отправки"
               block
               required
               style={{ marginBottom: 20 }}
             />
             <SelectPicker
-              data={companiesB.map(item => ({ label: item.name, value: item.id }))}
+              data={companiesA.map(item => ({ label: item.name, value: item.id }))}
               value={formValue.deliveryPointB}
               onChange={(value) => handleChange(value, 'deliveryPointB')}
-              placeholder="Выберите точку доставки B"
+              placeholder="Выберите точку получения"
               block
               required
               style={{ marginBottom: 20 }}

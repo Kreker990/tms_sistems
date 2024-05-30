@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../../db');
 const { CompaniesA } = require('./companiesA');
-const { CompaniesB } = require('./companiesB');
 const { Drivers } = require('./driver');
 const { StatusOrder } = require('./statusOrder');
 const { Staff } = require('./staff');
@@ -24,7 +23,7 @@ const Orders = db.sequelize.define('Orders', {
   deliveryPointB: {
     type: DataTypes.INTEGER,
     references: {
-      model: CompaniesB,
+      model: CompaniesA,
       key: 'id',
     },
   },

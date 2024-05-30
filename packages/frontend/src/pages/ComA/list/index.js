@@ -9,7 +9,7 @@ import { deleteCompanyA } from '../../../redux/action/companiesA';
 
 const { Column, HeaderCell, Cell } = Table;
 
-export const List = ({data}) => {
+export const List = ({ data }) => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
@@ -64,13 +64,13 @@ export const List = ({data}) => {
   return (
     <>
       <div className='flex justify-between items-center'>
-        <h5 className='table-title'>Точки отправки</h5>
-        {authorized.role === "admin" && <Button onClick={() => {
+        <h5 className='table-title'>Точки отправки и получения</h5>
+        <Button onClick={() => {
           setData(null);
           handleOpen();
         }} className='createButton' appearance="primary" endIcon={<MdOutlineAdd color='#fff' size={20} />}>
           Добавить
-        </Button>}
+        </Button>
       </div>
       <div>
         <Table
@@ -111,30 +111,28 @@ export const List = ({data}) => {
             <HeaderCell>Адрес</HeaderCell>
             <Cell dataKey="address" />
           </Column>
-          {
-            authorized.role === "admin" && <Column fixed="right" width={100}>
-              <HeaderCell className='text-center'>Действия</HeaderCell>
+          <Column fixed="right" width={100}>
+            <HeaderCell className='text-center'>Действия</HeaderCell>
 
-              <Cell style={{ padding: '6px' }}>
-                {rowData => (
-                  <div className='flex justify-between items-center'>
-                    <Button className='withoutButton' appearance="default" onClick={() => {
-                      setData(rowData);
-                      handleOpen();
-                    }}>
-                      <MdEdit color='#1caf68' size={20} />
-                    </Button>
-                    <Button className='withoutButton' appearance="default" onClick={() => {
-                      setData(rowData);
-                      setDelOpen(true);
-                    }}>
-                      <MdDeleteOutline color='rgb(210 54 54)' size={20} />
-                    </Button>
-                  </div>
-                )}
-              </Cell>
-            </Column>
-          }
+            <Cell style={{ padding: '6px' }}>
+              {rowData => (
+                <div className='flex justify-between items-center'>
+                  <Button className='withoutButton' appearance="default" onClick={() => {
+                    setData(rowData);
+                    handleOpen();
+                  }}>
+                    <MdEdit color='#1caf68' size={20} />
+                  </Button>
+                  <Button className='withoutButton' appearance="default" onClick={() => {
+                    setData(rowData);
+                    setDelOpen(true);
+                  }}>
+                    <MdDeleteOutline color='rgb(210 54 54)' size={20} />
+                  </Button>
+                </div>
+              )}
+            </Cell>
+          </Column>
         </Table>
       </div>
       {

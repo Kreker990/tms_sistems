@@ -2,7 +2,6 @@
 const express = require('express');
 const OrdersRepository = require('../repository/order');
 const { CompaniesA } = require('../repository/models');
-const { CompaniesB } = require('../repository/models');
 const { Drivers } = require('../repository/models');
 const { Staff } = require('../repository/models');
 const { StatusOrder } = require('../repository/models');
@@ -14,7 +13,7 @@ const createHandler = async (req, res) => {
     const { deliveryPointA, deliveryPointB, driverId, status, timeStart, timeEnd, managerId, comment, price } = req.body;
     // Проверяем существование связанных объектов
     const deliveryPointAExists = await CompaniesA.findByPk(deliveryPointA);
-    const deliveryPointBExists = await CompaniesB.findByPk(deliveryPointB);
+    const deliveryPointBExists = await CompaniesA.findByPk(deliveryPointB);
     const driverExists = await Drivers.findByPk(driverId);
     const managerExists = await Staff.findByPk(managerId);
     const statusExists = await StatusOrder.findByPk(status);
@@ -74,7 +73,7 @@ const updateHandler = async (req, res) => {
 
     // Проверяем существование связанных объектов
     const deliveryPointAExists = await CompaniesA.findByPk(deliveryPointA);
-    const deliveryPointBExists = await CompaniesB.findByPk(deliveryPointB);
+    const deliveryPointBExists = await CompaniesA.findByPk(deliveryPointB);
     const driverExists = await Drivers.findByPk(driverId);
     const managerExists = await Staff.findByPk(managerId);
     const statusExists = await StatusOrder.findByPk(status);

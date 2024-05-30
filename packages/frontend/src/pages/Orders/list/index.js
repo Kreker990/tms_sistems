@@ -113,12 +113,12 @@ export const List = () => {
           </Column>
 
           <Column flexGrow={1} fixed >
-            <HeaderCell>Точка доставки A</HeaderCell>
+            <HeaderCell>Точка отправки</HeaderCell>
             <Cell dataKey="a.name" />
           </Column>
 
           <Column flexGrow={1} >
-            <HeaderCell>Точка доставки B</HeaderCell>
+            <HeaderCell>Точка получения</HeaderCell>
             <Cell dataKey="b.name" />
           </Column>
 
@@ -155,20 +155,18 @@ export const List = () => {
               )}
             </Cell>
           </Column>
-
-          {authorized.role === "admin" && <Column fixed="right" width={100}>
+          <Column fixed="right" width={100}>
             <HeaderCell className='text-center'>Действия</HeaderCell>
 
             <Cell style={{ padding: '6px' }}>
               {rowData => (
-                <div className='flex justify-between items-center'>
+                <div className='flex justify-center items-center'>
                   <Button className='withoutButton' appearance="default" onClick={() => {
                     setOrderData(rowData);
                     handleOpen();
                   }}>
                     <MdEdit color='#1caf68' size={20} />
-                  </Button>
-                  <Button className='withoutButton' appearance="default" onClick={() => {
+                  </Button><Button className='withoutButton' appearance="default" onClick={() => {
                     setOrderData(rowData);
                     setDelOpen(true);
                   }}>
@@ -177,7 +175,7 @@ export const List = () => {
                 </div>
               )}
             </Cell>
-          </Column>}
+          </Column>
         </Table>
       </div>
       {open && <AddEditOrder handleClose={handleClose} open={open} data={orderData} />}

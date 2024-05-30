@@ -38,7 +38,7 @@ export const List = ({ data }) => {
     let filteredData = data
     if (authorized.role !== 'admin') {
       filteredData = data.filter(order => order.role === 'manager');
-    } 
+    }
     if (sortColumn && sortType) {
       return filteredData.sort((a, b) => {
         let x = a[sortColumn];
@@ -134,13 +134,15 @@ export const List = ({ data }) => {
                   <Cell style={{ padding: '6px' }}>
                     {rowData => (
                       <div className='flex justify-between items-center'>
-                        <Button className='withoutButton' appearance="default" onClick={() => {
+                        <Button className='withoutButton' appearance="default" onClick={(event) => {
+                          event.stopPropagation();
                           setData(rowData);
                           handleOpen();
                         }}>
                           <MdEdit color='#1caf68' size={20} />
                         </Button>
-                        <Button className='withoutButton' appearance="default" onClick={() => {
+                        <Button className='withoutButton' appearance="default" onClick={(event) => {
+                          event.stopPropagation();
                           setData(rowData);
                           setDelOpen(true);
                         }}>

@@ -18,7 +18,6 @@ import { List } from '@rsuite/icons';
 import SettingHorizontalIcon from '@rsuite/icons/SettingHorizontal';
 import Staff from './pages/Staff/Staff';
 import ComA from './pages/ComA/ComA';
-import ComB from './pages/ComB/ComB';
 import Drivers from './pages/Drivers/Drivers';
 import StatusOrder from './pages/StatusOrder/StatusOrder';
 import Header from './components/Header/Header';
@@ -108,10 +107,7 @@ export default function App() {
                   Заказы
                 </Nav.Item>
                 <Nav.Item eventKey="/coma" icon={<LocationIcon />}>
-                  Точки отправки
-                </Nav.Item>
-                <Nav.Item eventKey="/comb" icon={<LocationIcon />}>
-                  Точки доставки
+                  Точки отправки и получения
                 </Nav.Item>
                 {authorized.role === 'admin' &&
                   <Nav.Item eventKey="/statosorder" icon={<SettingHorizontalIcon />}>
@@ -136,7 +132,6 @@ export default function App() {
               <Route path="/staff" element={<Staff />} />
               <Route path="/drivers" element={<Drivers />} />
               <Route path="/coma" element={<ComA />} />
-              <Route path="/comb" element={<ComB />} />
               <Route path="/statosorder" element={<StatusOrder />} />
               <Route path="/orders" element={<Orders />} />
             </Routes>

@@ -1,5 +1,5 @@
 require('./models');
-const { Drivers, Orders, StatusOrder, CompaniesA, CompaniesB, Staff } = require('./models');
+const { Drivers, Orders, StatusOrder, CompaniesA, Staff } = require('./models');
 
 const create = async (
   {
@@ -43,7 +43,7 @@ const findAllData = async () => {
           as: 'a',
         },
         {
-          model: CompaniesB,
+          model: CompaniesA,
           attributes: ['id', 'name', 'address'],
           as: 'b',
         },

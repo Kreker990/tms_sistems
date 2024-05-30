@@ -9,7 +9,6 @@ const db = require('./db');
 const staff = require('./src1/api/staff');
 const driver = require('./src1/api/driver');
 const companiesA = require('./src1/api/companiesA');
-const companiesB = require('./src1/api/companiesB');
 const statusOrder = require('./src1/api/statusOrder');
 const order = require('./src1/api/order'); 
 
@@ -26,7 +25,6 @@ app.use('/static', express.static(path.join(__dirname, 'admin-frontend-dist', 's
 app.use('/api/v1/staff', staff);
 app.use('/api/v1/driver', driver);
 app.use('/api/v1/companiesa', companiesA);
-app.use('/api/v1/companiesb', companiesB);
 app.use('/api/v1/statusorder', statusOrder);
 app.use('/api/v1/orders', order);
 

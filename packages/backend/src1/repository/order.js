@@ -1,6 +1,6 @@
 // repository/order.js
 require('./models');
-const { Orders, StatusOrder, CompaniesA, CompaniesB, Drivers, Staff } = require('./models');
+const { Orders, StatusOrder, CompaniesA, Drivers, Staff } = require('./models');
 
 const createOrder = async (orderData) => {
   try {
@@ -26,7 +26,7 @@ const findAllOrders = async () => {
         as: 'a',
       },
       {
-        model: CompaniesB,
+        model: CompaniesA,
         attributes: ['id', 'name', 'address'],
         as: 'b',
       },

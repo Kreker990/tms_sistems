@@ -129,13 +129,15 @@ export const List = ({ data }) => {
                   <Cell style={{ padding: '6px' }}>
                     {rowData => (
                       <div className='flex justify-between items-center'>
-                        <Button className='withoutButton' appearance="default" onClick={() => {
+                        <Button className='withoutButton' appearance="default" onClick={(event) => {
+                          event.stopPropagation();
                           setData(rowData);
                           handleOpen();
                         }}>
                           <MdEdit color='#1caf68' size={20} />
                         </Button>
-                        <Button className='withoutButton' appearance="default" onClick={() => {
+                        <Button className='withoutButton' appearance="default" onClick={(event) => {
+                          event.stopPropagation();
                           setData(rowData);
                           setDelOpen(true);
                         }}>
