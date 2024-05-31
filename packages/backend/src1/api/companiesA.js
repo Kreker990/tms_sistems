@@ -6,7 +6,7 @@ const router = express.Router();
 // Обработчик создания новой компании
 const createHandler = async (req, res) => {
   try {
-    const { name, email, type, address } = req.body;
+    const { name, email, type, address, contact } = req.body;
 
     // проверка заполненных полей;
     const fields = [
@@ -28,6 +28,7 @@ const createHandler = async (req, res) => {
       email,
       type,
       address,
+      contact
     });
 
     return res.status(201).json({ message: 'Точка отправки успешно добавлена.', data: company });
@@ -60,7 +61,7 @@ const deleteById = async (req, res) => {
 // Обновление компании по ID
 const updateHandler = async (req, res) => {
   const { id } = req.params;
-  const { name, email, type, address } = req.body;
+  const { name, email, type, address, contact } = req.body;
 
   try {
     const updated = await companiesARepository.updateCompanyA(id, {
@@ -68,6 +69,7 @@ const updateHandler = async (req, res) => {
       email,
       type,
       address,
+      contact
     });
 
     if (!updated) {

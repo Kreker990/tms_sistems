@@ -63,80 +63,87 @@ export const List = ({ data }) => {
 
   return (
     <>
-      <div className='flex justify-between items-center'>
-        <h5 className='table-title'>Точки отправки и получения</h5>
-        <Button onClick={() => {
-          setData(null);
-          handleOpen();
-        }} className='createButton' appearance="primary" endIcon={<MdOutlineAdd color='#fff' size={20} />}>
-          Добавить
-        </Button>
-      </div>
-      <div>
-        <Table
-          height={100 + (data?.length * 40)}
-          className='mt-[20px]'
-          data={getData()}
-          sortColumn={sortColumn}
-          sortType={sortType}
-          onSortColumn={handleSortColumn}
-          loading={loading}
-          minwidth={500}
-          style={{ width: '100%', maxHeight: '450px' }}
-          locale={{
-            emptyMessage: 'Данные не найдены',
-          }}
-        >
-          <Column width={70} align="center" fixed sortable>
-            <HeaderCell>Id</HeaderCell>
-            <Cell dataKey="id" />
-          </Column>
-
-          <Column flexGrow={1} fixed sortable>
-            <HeaderCell>Название</HeaderCell>
-            <Cell dataKey="name" />
-          </Column>
-
-          <Column flexGrow={1} sortable>
-            <HeaderCell>Электронная почта</HeaderCell>
-            <Cell dataKey="email" />
-          </Column>
-
-          <Column flexGrow={1} sortable>
-            <HeaderCell>Тип</HeaderCell>
-            <Cell dataKey="type" />
-          </Column>
-
-          <Column flexGrow={1} sortable>
-            <HeaderCell>Адрес</HeaderCell>
-            <Cell dataKey="address" />
-          </Column>
-          <Column fixed="right" width={100}>
-            <HeaderCell className='text-center'>Действия</HeaderCell>
-
-            <Cell style={{ padding: '6px' }}>
-              {rowData => (
-                <div className='flex justify-between items-center'>
-                  <Button className='withoutButton' appearance="default" onClick={() => {
-                    setData(rowData);
-                    handleOpen();
-                  }}>
-                    <MdEdit color='#1caf68' size={20} />
-                  </Button>
-                  <Button className='withoutButton' appearance="default" onClick={() => {
-                    setData(rowData);
-                    setDelOpen(true);
-                  }}>
-                    <MdDeleteOutline color='rgb(210 54 54)' size={20} />
-                  </Button>
-                </div>
-              )}
-            </Cell>
-          </Column>
-        </Table>
-      </div>
       {
-        open && <AddEdit handleClose={handleClose} open={open} data={comAData} />
+        !open ? <>
+          <div className='flex justify-between items-center'>
+            <h5 className='table-title'>Точки отправки и получения</h5>
+            <Button onClick={() => {
+              setData(null);
+              handleOpen();
+            }} className='createButton' appearance="primary" endIcon={<MdOutlineAdd color='#fff' size={20} />}>
+              Добавить
+            </Button>
+          </div>
+          <div>
+            <Table
+              height={100 + (data?.length * 40)}
+              className='mt-[20px]'
+              data={getData()}
+              sortColumn={sortColumn}
+              sortType={sortType}
+              onSortColumn={handleSortColumn}
+              loading={loading}
+              minwidth={500}
+              style={{ width: '100%', maxHeight: '450px' }}
+              locale={{
+                emptyMessage: 'Данные не найдены',
+              }}
+            >
+              <Column width={70} align="center" fixed sortable>
+                <HeaderCell>Id</HeaderCell>
+                <Cell dataKey="id" />
+              </Column>
+
+              <Column flexGrow={1} fixed sortable>
+                <HeaderCell>Название</HeaderCell>
+                <Cell dataKey="name" />
+              </Column>
+
+              <Column flexGrow={1} sortable>
+                <HeaderCell>Электронная почта</HeaderCell>
+                <Cell dataKey="email" />
+              </Column>
+
+              <Column flexGrow={1} sortable>
+                <HeaderCell>Тип</HeaderCell>
+                <Cell dataKey="type" />
+              </Column>
+
+              <Column flexGrow={1} sortable>
+                <HeaderCell>Контакт</HeaderCell>
+                <Cell dataKey="contact" />
+              </Column>
+
+              <Column flexGrow={1} sortable>
+                <HeaderCell>Адрес</HeaderCell>
+                <Cell dataKey="address" />
+              </Column>
+              <Column fixed="right" width={100}>
+                <HeaderCell className='text-center'>Действия</HeaderCell>
+
+                <Cell style={{ padding: '6px' }}>
+                  {rowData => (
+                    <div className='flex justify-between items-center'>
+                      <Button className='withoutButton' appearance="default" onClick={() => {
+                        setData(rowData);
+                        handleOpen();
+                      }}>
+                        <MdEdit color='#1caf68' size={20} />
+                      </Button>
+                      <Button className='withoutButton' appearance="default" onClick={() => {
+                        setData(rowData);
+                        setDelOpen(true);
+                      }}>
+                        <MdDeleteOutline color='rgb(210 54 54)' size={20} />
+                      </Button>
+                    </div>
+                  )}
+                </Cell>
+              </Column>
+            </Table>
+          </div>
+        </>
+          : <AddEdit handleClose={handleClose} open={open} data={comAData} />
       }
       {
         delOpen && <DelPopup handleDelete={() => hadnleDelete(comAData.id)} handleClose={() => setDelOpen(false)} open={delOpen} text={`точку отправки ${comAData.name}`} />

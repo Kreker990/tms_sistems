@@ -5,6 +5,7 @@ const createCompanyA = async ({
   email,
   type,
   address,
+  contact
 }) => {
   try {
     // eslint-disable-next-line no-unused-vars
@@ -13,6 +14,7 @@ const createCompanyA = async ({
       email,
       type,
       address,
+      contact
     });
     return company;
   } catch (error) {

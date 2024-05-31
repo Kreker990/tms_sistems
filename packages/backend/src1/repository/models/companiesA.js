@@ -25,6 +25,22 @@ const CompaniesA = db.sequelize.define('CompaniesA', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  contact: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  country: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  city: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  street: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 module.exports = {

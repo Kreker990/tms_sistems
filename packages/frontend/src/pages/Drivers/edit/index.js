@@ -38,8 +38,7 @@ const AddEdit = ({ open, handleClose, data }) => {
             <TextField required name="carNumber" value={formValue.carNumber} label="Номер машины" placeholder='AAA888' mask={[/[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/]} onChange={(value) => handleChange(value, "carNumber")}
             />
             <TextField required name="contact" value={formValue.contact} label="Номрер телефона" placeholder={data?.contact ?? "(555) 333-777}"} mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]} onChange={(value) => handleChange(value, "contact")} />
-            <Checkbox checked={formValue.busy}
-              onChange={(_, checked) => setFormValue(prev => ({ ...prev, busy: checked }))} name="busy">Занят</Checkbox>
+            <div style={{ height: '10px'}}></div>
           </Modal.Body>
           <Modal.Footer>
             <Button type='submit' appearance="primary">

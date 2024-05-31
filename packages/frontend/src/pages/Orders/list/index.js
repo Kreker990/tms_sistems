@@ -21,7 +21,6 @@ export const List = () => {
   const [orderData, setOrderData] = useState(null);
   const dispatch = useDispatch();
   const orders = useSelector(state => state.orders.orders);
-  const authorized = useSelector(state => state.authorized);
 
   useEffect(() => {
     dispatch(getOrders());

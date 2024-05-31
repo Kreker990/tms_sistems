@@ -50,14 +50,6 @@ body {
     padding: 20px;
 }
 
-.rs-modal {
-    margin-top: 70px !important;
-}
-
-.rs-modal-body {
-    max-height: 380px !important;
-}
-
 .driverEditModal .rs-modal-body {
     padding-bottom: 0 !important;
 }

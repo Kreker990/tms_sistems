@@ -4,7 +4,7 @@ import { Form, Button, Modal, SelectPicker, DatePicker } from 'rsuite';
 import { useDispatch, useSelector } from 'react-redux';
 import TextField from '../../../components/TextField';
 import { addOrder, updateOrder } from '../../../redux/action/order';
-import { getCompaniesA, getCompaniesB, getDrivers, getStaff, getStatusOrder } from '../../../redux/action/helpers';
+import { getCompaniesA, getDrivers, getStaff, getStatusOrder } from '../../../redux/action/helpers';
 
 const AddEditOrder = ({ open, handleClose, data }) => {
   const initialData = {

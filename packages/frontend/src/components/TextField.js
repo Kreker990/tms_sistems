@@ -2,10 +2,10 @@
 import { Form, MaskedInput } from "rsuite";
 
 export default function TextField(props) {
-  const { name, label, placeholder,onChange, mask, ...rest } = props;
+  const { name, label, placeholder,onChange, style, mask, ...rest } = props;
 
   return (
-    <Form.Group controlId={`${name}-3`}>
+    <Form.Group controlId={`${name}-3`} style={style}>
       <Form.ControlLabel>{label}</Form.ControlLabel>
       {mask ? <MaskedInput
         name={name}

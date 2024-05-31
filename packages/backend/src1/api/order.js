@@ -10,7 +10,17 @@ const router = express.Router();
 
 const createHandler = async (req, res) => {
   try {
-    const { deliveryPointA, deliveryPointB, driverId, status, timeStart, timeEnd, managerId, comment, price } = req.body;
+    const {
+      deliveryPointA,
+      deliveryPointB,
+      driverId,
+      status,
+      timeStart,
+      timeEnd,
+      managerId,
+      comment,
+      price,
+    } = req.body;
     // Проверяем существование связанных объектов
     const deliveryPointAExists = await CompaniesA.findByPk(deliveryPointA);
     const deliveryPointBExists = await CompaniesA.findByPk(deliveryPointB);
@@ -69,7 +79,17 @@ const getByIdHandler = async (req, res) => {
 const updateHandler = async (req, res) => {
   try {
     const { id } = req.params;
-    const { deliveryPointA, deliveryPointB, driverId, status, timeStart, timeEnd, managerId, comment, price } = req.body;
+    const {
+      deliveryPointA,
+      deliveryPointB,
+      driverId,
+      status,
+      timeStart,
+      timeEnd,
+      managerId,
+      comment,
+      price,
+    } = req.body;
 
     // Проверяем существование связанных объектов
     const deliveryPointAExists = await CompaniesA.findByPk(deliveryPointA);
