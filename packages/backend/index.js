@@ -33,8 +33,8 @@ app.get('*', (req, res) => {
 });
 
 db.testConnection()
-  // .then(() => db.sequelize.sync())
-  .then(() => db.sequelize.sync({ force: true, logging: false }))
+  .then(() => db.sequelize.sync())
+  // .then(() => db.sequelize.sync({ force: true, logging: false }))
   .then(
     app.listen(PORT, () => {
       console.log(`Server listening on ${PORT}`);
