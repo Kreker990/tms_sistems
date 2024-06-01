@@ -8,6 +8,8 @@ const create = async (
     mail,
     contact,
     busy,
+    hashedPassword,
+    salt,
   },
 ) => {
   try {
@@ -18,6 +20,8 @@ const create = async (
       mail,
       contact,
       busy,
+      hashedPassword,
+      salt,
     });
     return driver;
   } catch (error) {
@@ -52,6 +56,11 @@ const findAllData = async () => {
           attributes: ['id', 'name', 'contact'],
           as: 'staff',
         },
+        {
+          model: Drivers,
+          attributes: ['id', 'name', 'contact'],
+          as: 'driver',
+        },
       ]
     },
   });
@@ -72,11 +81,62 @@ const update = async (id, data) => {
   }
 };
 
+const findByEmail = async (mail) => {
+  const user = await Drivers.findOne({
+    where: {
+      mail,
+    },
+  });
+  return user;
+};
+
 const delet = async (id) => Drivers.destroy({ where: { id } });
+
+const findById = async (id) => {
+  const data = await Drivers.findOne({
+    where: {
+      id,
+    },
+    include: {
+      model: Orders,
+      attributes: ['id', 'price', 'timeStart', 'comment', 'timeEnd'],
+      as: 'orders',
+      include: [
+        {
+          model: StatusOrder,
+          attributes: ['id', 'key', 'value'],
+          as: 'statusorder',
+        }, {
+          model: CompaniesA,
+          attributes: ['id', 'name', 'address', 'contact'],
+          as: 'a',
+        },
+        {
+          model: CompaniesA,
+          attributes: ['id', 'name', 'address', 'contact'],
+          as: 'b',
+        },
+        {
+          model: Staff,
+          attributes: ['id', 'name', 'contact'],
+          as: 'staff',
+        },
+        {
+          model: Drivers,
+          attributes: ['id', 'name', 'contact'],
+          as: 'driver',
+        },
+      ]
+    },
+  })
+  return data;
+}
 
 module.exports = {
   create,
   findAllData,
   update,
   delet,
+  findByEmail,
+  findById,
 };

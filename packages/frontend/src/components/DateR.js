@@ -36,3 +36,59 @@ export const filterOrdersByDate = (orders, range) => {
 
   return filteredOrders;
 };
+
+export const customLocale = {
+  sunday: 'Вс',
+  monday: 'Пн',
+  tuesday: 'Вт',
+  wednesday: 'Ср',
+  thursday: 'Чт',
+  friday: 'Пт',
+  saturday: 'Сб',
+  ok: 'Ок',
+  today: 'Сегодня',
+  yesterday: 'Вчера',
+  hours: 'Часы',
+  minutes: 'Минуты',
+  seconds: 'Секунды',
+  last7Days: 'Последние 7 дней',
+  january: 'Январь',
+  february: 'Февраль',
+  march: 'Март',
+  april: 'Апрель',
+  may: 'Май',
+  june: 'Июнь',
+  july: 'Июль',
+  august: 'Август',
+  september: 'Сентябрь',
+  october: 'Октябрь',
+  november: 'Ноябрь',
+  december: 'Декабрь',
+};
+
+export const predefinedRanges = [
+  {
+    label: 'Сегодня',
+    value: [new Date(), new Date()]
+  },
+  {
+    label: 'Последняя неделя',
+    value: [new Date(Date.now() - 7 * 86400000), new Date()]
+  },
+  {
+    label: 'Последний месяц',
+    value: [new Date(Date.now() - 30 * 86400000), new Date()]
+  }
+];
+
+export const handleDateRangeChange = (data, range) => {
+  if (range[0]) {
+    const [start, end] = range;
+    return data.filter(item => {
+      const itemDate = new Date(item.timeStart);
+      return itemDate >= start && itemDate <= end;
+    });
+  } else {
+    return data;
+  }
+};

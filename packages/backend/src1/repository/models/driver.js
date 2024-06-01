@@ -20,6 +20,7 @@ const Drivers = db.sequelize.define('Drivers', {
   mail: {
     type: DataTypes.STRING,
     allowNull: true,
+    unique: true,
   },
   contact: {
     type: DataTypes.STRING,
@@ -28,6 +29,12 @@ const Drivers = db.sequelize.define('Drivers', {
   busy: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
+  },
+  hashedPassword: {
+    type: DataTypes.BLOB,
+  },
+  salt: {
+    type: DataTypes.BLOB,
   },
 });
 

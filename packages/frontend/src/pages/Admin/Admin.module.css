@@ -37,3 +37,35 @@
   font-size: 1.2em;
   color: #555;
 }
+
+.orderSummary {
+  padding: 20px;
+}
+
+.chartContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.pieChart, .barChart {
+  flex: 1;
+  margin: 20px;
+  max-width: 600px;
+}
+
+.pieChartWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.pieChartLegend {
+  margin-left: 20px;
+  text-align: left;
+}
+
+.pieChartLegend div {
+  margin-bottom: 10px;
+  font-size: 16px;
+}

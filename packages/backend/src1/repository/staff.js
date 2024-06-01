@@ -49,12 +49,12 @@ const findAllData = async () => {
           as: 'statusorder',
         }, {
           model: CompaniesA,
-          attributes: ['id', 'name', 'address'],
+          attributes: ['id', 'name', 'address', 'contact'],
           as: 'a',
         },
         {
           model: CompaniesA,
-          attributes: ['id', 'name', 'address'],
+          attributes: ['id', 'name', 'address', 'contact'],
           as: 'b',
         },
         {
@@ -62,6 +62,11 @@ const findAllData = async () => {
           attributes: ['id', 'name', 'contact'],
           as: 'driver',
         },
+        {
+          model: Staff,
+          attributes: ['id', 'name', 'contact'],
+          as: 'staff'
+        }
       ]
     },
   });

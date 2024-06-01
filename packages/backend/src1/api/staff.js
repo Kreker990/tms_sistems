@@ -100,15 +100,16 @@ const getAll = async (req, res) => {
 
 const updateHandler = async (req, res) => {
   const { id } = req.params;
-  const { name, mail, contact, role } = req.body;
+  const { name, mail, contact, role, password } = req.body;
+  const updateData = { name, mail, contact, role };
+  if (password) {
+    const salt = crypto.randomBytes(16);
+    updateData.hashedPassword = await generatePasswordHash(password, salt);
+    updateData.salt = salt
+  }
 
   try {
-    const updated = await StaffRepository.update(id, {
-      name,
-      mail,
-      contact,
-      role,
-    });
+    const updated = await StaffRepository.update(id, updateData);
 
     if (!updated) {
       return res.status(404).json({ message: 'Данные не найдены' });

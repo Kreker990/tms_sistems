@@ -23,7 +23,10 @@ const Header = () => {
     return (
         <div className="flex items-center justify-between px-[20px] py-[10px] bg-white h-[56px]">
             <div className="flex items-center gap-[30px]">
-                <span className="text-[18px]">{authorized.role === 'admin' ? "Админ" : "Диспетчер"}</span>
+                <span className="text-[18px]">{authorized.role === 'admin'
+                    ? "Админ" :
+                    authorized.role === 'driver'
+                        ? "Водитель" : "Диспетчер"}</span>
             </div>
             <div className="flex items-center gap-[8px]">
                 <div className="flex items-center gap-[8px]">

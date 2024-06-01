@@ -5,6 +5,8 @@ const { CompaniesA } = require('../repository/models');
 const { Drivers } = require('../repository/models');
 const { Staff } = require('../repository/models');
 const { StatusOrder } = require('../repository/models');
+const generateOrdersPdf = require('../services/pdfFileGenerate');
+const fs = require('fs');
 
 const router = express.Router();
 
@@ -136,10 +138,39 @@ const deleteHandler = async (req, res) => {
   }
 };
 
+const getPdfFile = async (req, res) => {
+  try {
+    const orders = req.body;
+
+    if (!Array.isArray(orders) || orders.length === 0) {
+      return res.status(400).json({ message: 'Invalid orders data' });
+    }
+
+    const filePath = await generateOrdersPdf(orders);
+
+    res.download(filePath, 'orders.pdf', (err) => {
+      if (err) {
+        console.error(`Error downloading the file: ${err}`);
+        res.status(500).send('Error downloading the file');
+      } else {
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error(`Error deleting the file: ${err}`);
+          }
+        });
+      }
+    });
+  } catch (error) {
+    console.error(`Error generating PDF: ${error}`);
+    res.status(500).send('Error generating PDF');
+  }
+};
+
 router.post('/', createHandler);
 router.get('/', getAllHandler);
 router.get('/:id', getByIdHandler);
 router.put('/:id', updateHandler);
 router.delete('/:id', deleteHandler);
+router.post('/pdf', getPdfFile);
 
 module.exports = router;

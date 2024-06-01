@@ -1,4 +1,4 @@
-import { Button, Table, SelectPicker } from 'rsuite';
+import { Button, Table, Whisper, Tooltip, DateRangePicker, IconButton } from 'rsuite';
 import { useState } from 'react';
 import AddEdit from '../edit';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,9 @@ import { deleteDriver } from '../../../redux/action/getDriver';
 import DelPopup from '../../../components/DelPopup';
 import { MdDeleteOutline, MdEdit, MdOutlineAdd } from "react-icons/md";
 import styles from './index.module.css';
-import { dateRanges, filterOrdersByDate } from '../../../components/DateR';
+import { customLocale, handleDateRangeChange, predefinedRanges } from '../../../components/DateR';
+import { getPdfFile } from '../../../redux/action';
+import FileDownload from '@rsuite/icons/FileDownload';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -20,8 +22,16 @@ export const List = ({ data }) => {
   const [delOpen, setDelOpen] = useState(false);
   const [driverData, setData] = useState(null);
   const dispatch = useDispatch();
-  const [dateRange, setDateRange] = useState('allTime');
+  const [dateRange, setDateRange] = useState([null, null]);
   const authorized = useSelector(s => s.authorized);
+
+  const handleRangeChange = (range) => {
+    if (range) {
+      setDateRange(range);
+    } else {
+      setDateRange([null, null])
+    }
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -129,20 +139,32 @@ export const List = ({ data }) => {
                   <Cell style={{ padding: '6px' }}>
                     {rowData => (
                       <div className='flex justify-between items-center'>
-                        <Button className='withoutButton' appearance="default" onClick={(event) => {
-                          event.stopPropagation();
-                          setData(rowData);
-                          handleOpen();
-                        }}>
-                          <MdEdit color='#1caf68' size={20} />
-                        </Button>
-                        <Button className='withoutButton' appearance="default" onClick={(event) => {
-                          event.stopPropagation();
-                          setData(rowData);
-                          setDelOpen(true);
-                        }}>
-                          <MdDeleteOutline color='rgb(210 54 54)' size={20} />
-                        </Button>
+                        <Whisper
+                          trigger="hover"
+                          placement="top"
+                          speaker={<Tooltip>Редактировать</Tooltip>}
+                        >
+                          <Button className='withoutButton' appearance="default" onClick={(event) => {
+                            event.stopPropagation();
+                            setData(rowData);
+                            handleOpen();
+                          }}>
+                            <MdEdit color='#1caf68' size={20} />
+                          </Button>
+                        </Whisper>
+                        <Whisper
+                          trigger="hover"
+                          placement="top"
+                          speaker={<Tooltip>Удалить</Tooltip>}
+                        >
+                          <Button className='withoutButton' appearance="default" onClick={(event) => {
+                            event.stopPropagation();
+                            setData(rowData);
+                            setDelOpen(true);
+                          }}>
+                            <MdDeleteOutline color='rgb(210 54 54)' size={20} />
+                          </Button>
+                        </Whisper>
                       </div>
                     )}
                   </Cell>
@@ -159,28 +181,39 @@ export const List = ({ data }) => {
         </>
           : <>
             <div className='flex justify-between items-center'>
-              <h5 className='table-title'>{driverMore.name} (заказы)</h5>
-              <div>
-                <SelectPicker
-                  data={dateRanges}
-                  value={dateRange}
-                  onChange={setDateRange}
-                  placeholder="Выберите временной диапазон"
-                  style={{ width: 224, marginRight: '16px' }}
+              <div className='flex items-center space-x-4'>
+                <h5 className='table-title'>{driverMore.name} (заказы)</h5>
+                <DateRangePicker
+                  locale={customLocale}
+                  ranges={predefinedRanges}
+                  onChange={handleRangeChange}
                 />
-                {authorized.role === "admin" && <Button onClick={() => {
+              </div>
+              <div>
+                <Whisper
+                  trigger="hover"
+                  placement="top"
+                  speaker={<Tooltip>Скачать PDF</Tooltip>}
+                >
+                  <IconButton
+                    icon={<FileDownload />}
+                    onClick={() => getPdfFile(handleDateRangeChange(driverMore.orders, dateRange))}
+                    style={{ marginRight: '16px' }}
+                  />
+                </Whisper>
+                <Button onClick={() => {
                   setData(null);
                   setDriverInfo(false)
                 }} className='createButton' appearance="primary">
                   Назад к таблице водителей
-                </Button>}
+                </Button>
               </div>
             </div>
             <div>
               <Table
                 height={100 + (data.length * 40)}
                 className='mt-[20px]'
-                data={filterOrdersByDate(driverMore.orders, dateRange)}
+                data={handleDateRangeChange(driverMore.orders, dateRange)}
                 sortColumn={sortColumn}
                 sortType={sortType}
                 onSortColumn={handleSortColumn}
@@ -245,7 +278,11 @@ export const List = ({ data }) => {
                 </Column>
                 <Column flexGrow={1} >
                   <HeaderCell>Цена</HeaderCell>
-                  <Cell dataKey="price" />
+                  <Cell>
+                    {rowData => (
+                      <div>{rowData.price.toFixed(2)}</div>
+                    )}
+                  </Cell>
                 </Column>
                 <Column flexGrow={1} >
                   <HeaderCell>Оплата</HeaderCell>
@@ -256,7 +293,7 @@ export const List = ({ data }) => {
                   </Cell>
                 </Column>
               </Table>
-              <div className={styles.totalSum}>Общая оплата: {driverMore?.orders?.reduce((sum, item) => sum + (item.price * 0.80), 0).toFixed(2)}</div>
+              <div className={styles.totalSum}>Общая оплата: {handleDateRangeChange(driverMore.orders, dateRange)?.reduce((sum, item) => sum + (item.price * 0.80), 0).toFixed(2)}</div>
             </div>
           </>
       }

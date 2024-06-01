@@ -8,7 +8,6 @@ const statusOrderReducer = (state = initialState, action) => {
     case GET_STATUS_ORDER:
       return [...action.payload];
     case ADD_STATUS_ORDER:
-      console.log(action.payload, '-=-=-=-=-=')
       return [...state, action.payload];
     case UPDATE_STATUS_ORDER:
       return state.map(el =>
