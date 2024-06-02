@@ -283,7 +283,7 @@ export const List = ({ data }) => {
                   <Cell dataKey="price" />
                 </Column>
               </Table>
-              <div className={styles.totalSum}>Общая оплата: {handleDateRangeChange(managerMore.orders, dateRange).reduce((sum, item) => sum + item.price, 0).toFixed(2)}</div>
+              <div className={styles.totalSum}>Общая оплата: {handleDateRangeChange(managerMore.orders, dateRange).reduce((sum, item) => sum + item.price, 0).toFixed(2)} сом</div>
             </div>
           </>
       }

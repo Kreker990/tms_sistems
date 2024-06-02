@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '../../../redux/action/order';
 
 const { Column, HeaderCell, Cell } = Table;
-
+const PriceCell = ({ rowData, dataKey, ...props }) => (
+  <Cell {...props}>
+    {`${rowData[dataKey]} сом`}
+  </Cell>
+);
 export const List = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
@@ -95,7 +99,7 @@ export const List = () => {
           </Column>
           <Column flexGrow={1}>
             <HeaderCell>Цена</HeaderCell>
-            <Cell dataKey="price" />
+            <PriceCell dataKey="price" />
           </Column>
         </Table>
       </div>

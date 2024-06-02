@@ -14,9 +14,10 @@
 
 .orderSummaryCards {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 20px; /* Отступы между карточками */
+  gap: 15px;
+  /* Отступы между карточками */
 }
 
 .orderSummaryCard {
@@ -29,7 +30,8 @@
   width: 200px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрирование содержимого */
+  align-items: center;
+  /* Центрирование содержимого */
 }
 
 .orderSummaryCard label {
@@ -49,7 +51,8 @@
   margin-top: 20px;
 }
 
-.pieChart, .barChart {
+.pieChart,
+.barChart {
   flex: 1;
   margin: 20px;
   max-width: 600px;
@@ -68,4 +71,14 @@
 .pieChartLegend div {
   margin-bottom: 10px;
   font-size: 16px;
+}
+
+h2 {
+  font-weight: 900;
+  font-size: 38px;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 26px;
 }

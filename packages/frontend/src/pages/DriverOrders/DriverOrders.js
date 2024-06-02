@@ -158,8 +158,8 @@ export default function DriverOrders() {
                 <p><strong>Менеджер:</strong> {orderDetail.staff.name}, 0{orderDetail.staff.contact}</p>
                 <p><strong>Дата загрузки:</strong> {orderDetail.timeStart} <strong>Дата выгрузки:</strong> {orderDetail.timeEnd}</p>
                 <p><strong>Комментарий:</strong> {orderDetail.comment}</p>
-                <p><strong>Цена:</strong> {(orderDetail.price).toFixed(2)}</p>
-                <p><strong>Оплата:</strong> {(orderDetail.price / 100 * 80).toFixed(2)}</p>
+                <p><strong>Цена:</strong> {(orderDetail.price).toFixed(2)} сом</p>
+                <p><strong>Оплата:</strong> {(orderDetail.price / 100 * 80).toFixed(2)} сом</p>
               </Panel>
             )
         }

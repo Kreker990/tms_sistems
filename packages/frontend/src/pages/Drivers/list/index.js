@@ -280,7 +280,7 @@ export const List = ({ data }) => {
                   <HeaderCell>Цена</HeaderCell>
                   <Cell>
                     {rowData => (
-                      <div>{rowData.price.toFixed(2)}</div>
+                      <div>{rowData.price.toFixed(2)} сом</div>
                     )}
                   </Cell>
                 </Column>
@@ -293,7 +293,7 @@ export const List = ({ data }) => {
                   </Cell>
                 </Column>
               </Table>
-              <div className={styles.totalSum}>Общая оплата: {handleDateRangeChange(driverMore.orders, dateRange)?.reduce((sum, item) => sum + (item.price * 0.80), 0).toFixed(2)}</div>
+              <div className={styles.totalSum}>Общая оплата: {handleDateRangeChange(driverMore.orders, dateRange)?.reduce((sum, item) => sum + (item.price * 0.80), 0).toFixed(2)} сом</div>
             </div>
           </>
       }

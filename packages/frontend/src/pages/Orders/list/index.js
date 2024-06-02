@@ -13,7 +13,11 @@ import { getPdfFile } from '../../../redux/action';
 import FileDownload from '@rsuite/icons/FileDownload';
 
 const { Column, HeaderCell, Cell } = Table;
-
+const PriceCell = ({ rowData, dataKey, ...props }) => (
+  <Cell {...props}>
+    {`${rowData[dataKey]} сом`}
+  </Cell>
+);
 export const List = () => {
   const [orderDetail, setOrderDetail] = useState(null);
   const [sortColumn, setSortColumn] = useState();
@@ -167,7 +171,7 @@ export const List = () => {
             </Column>
             <Column flexGrow={1} >
               <HeaderCell>Цена</HeaderCell>
-              <Cell dataKey="price" />
+              <PriceCell dataKey="price" />
             </Column>
             <Column flexGrow={1} >
               <HeaderCell>время</HeaderCell>
@@ -259,8 +263,8 @@ export const List = () => {
             <p><strong>Менеджер:</strong> {orderDetail.staff.name}, 0{orderDetail.staff.contact}</p>
             <p><strong>Дата загрузки:</strong> {orderDetail.timeStart} <strong>Дата выгрузки:</strong> {orderDetail.timeEnd}</p>
             <p><strong>Комментарий:</strong> {orderDetail.comment}</p>
-            <p><strong>Цена:</strong> {(orderDetail.price).toFixed(2)}</p>
-            <p><strong>Оплата:</strong> {(orderDetail.price / 100 * 80).toFixed(2)}</p>
+            <p><strong>Цена:</strong> {(orderDetail.price).toFixed(2)} сом</p>
+            <p><strong>Оплата:</strong> {(orderDetail.price / 100 * 80).toFixed(2)} сом</p>
           </Panel>
         )
       }

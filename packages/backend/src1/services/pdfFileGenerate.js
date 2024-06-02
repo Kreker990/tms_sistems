@@ -52,8 +52,8 @@ const generateOrdersPdf = (orders) => {
       doc.fontSize(14).text(`контакты: ${order.b.contact}`).moveDown(1);
 
       doc.fontSize(14).text(`Комментарий: ${order.comment}`).moveDown(0.5);
-      doc.fontSize(14).text(`Цена: ${order.price.toFixed(2)}`).moveDown(0.25);
-      doc.fontSize(14).text(`Оплата водителя: ${(order.price / 100 * 80).toFixed(2)}`).moveDown(0.25);
+      doc.fontSize(14).text(`Цена: ${order.price.toFixed(2)} сом`).moveDown(0.25);
+      doc.fontSize(14).text(`Оплата водителя: ${(order.price / 100 * 80).toFixed(2)} сом`).moveDown(0.25);
 
       // Подпись
       doc.fontSize(12).text('Отчет создан:', { align: 'right' });
@@ -64,8 +64,8 @@ const generateOrdersPdf = (orders) => {
       }
     });
     doc.moveDown(3);
-    doc.fontSize(12).text(`Итоговая сумма: ${totalSum.toFixed(2)}`).moveDown(0.25);
-    doc.fontSize(12).text(`Оплата водителя: ${(totalSum / 100 * 80).toFixed(2)}`).moveDown(0.25);
+    doc.fontSize(12).text(`Итоговая сумма: ${totalSum.toFixed(2)} сом`).moveDown(0.25);
+    doc.fontSize(12).text(`Оплата водителя: ${(totalSum / 100 * 80).toFixed(2)} сом`).moveDown(0.25);
     doc.end();
   });
 };
