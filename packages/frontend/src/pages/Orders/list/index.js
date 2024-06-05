@@ -1,6 +1,5 @@
-// components/orders/List.js
 import React, { useState, useEffect } from 'react';
-import { Button, Table, IconButton, Panel, DateRangePicker, Whisper, Tooltip } from 'rsuite';
+import { Button, Table, IconButton, Panel, DateRangePicker, Whisper, Tooltip, SelectPicker } from 'rsuite';
 import CloseIcon from '@rsuite/icons/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import AddEditOrder from '../edit/index';
@@ -18,6 +17,7 @@ const PriceCell = ({ rowData, dataKey, ...props }) => (
     {`${rowData[dataKey]} сом`}
   </Cell>
 );
+
 export const List = () => {
   const [orderDetail, setOrderDetail] = useState(null);
   const [sortColumn, setSortColumn] = useState();
@@ -27,8 +27,10 @@ export const List = () => {
   const [open, setOpen] = useState(false);
   const [delOpen, setDelOpen] = useState(false);
   const [orderData, setOrderData] = useState(null);
+  const [statusFilter, setStatusFilter] = useState(null);
   const dispatch = useDispatch();
   const orders = useSelector(state => state.orders.orders);
+  const statusOrder = useSelector(s => s.statusOrder);
 
   useEffect(() => {
     dispatch(getOrders());
@@ -49,6 +51,9 @@ export const List = () => {
 
   const getData = () => {
     let filteredOrders = handleDateRangeChange(orders, dateRange);
+    if (statusFilter) {
+      filteredOrders = filteredOrders.filter(order => order.statusorder.value === statusFilter);
+    }
     if (sortColumn && sortType) {
       return filteredOrders.sort((a, b) => {
         let x = a[sortColumn];
@@ -77,9 +82,11 @@ export const List = () => {
       setSortType(sortType);
     }, 500);
   };
+
   const handleRowClick = (order) => {
     setOrderDetail(order);
   };
+
   const handleRangeChange = (range) => {
     if (range) {
       setDateRange(range);
@@ -87,6 +94,11 @@ export const List = () => {
       setDateRange([null, null])
     }
   };
+
+  const handleStatusChange = (value) => {
+    setStatusFilter(value);
+  };
+
   return (
     <>
       {!orderDetail ? <>
@@ -97,6 +109,12 @@ export const List = () => {
               locale={customLocale}
               ranges={predefinedRanges}
               onChange={handleRangeChange}
+            />
+            <SelectPicker
+              data={statusOrder.map(status => ({ label: status.value, value: status.value }))}
+              placeholder="Выберите статус"
+              onChange={handleStatusChange}
+              style={{ width: 224 }}
             />
           </div>
           <div>

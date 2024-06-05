@@ -28,7 +28,7 @@ const AddEdit = ({ open, handleClose, data }) => {
         <Form onSubmit={handleSubmit} fluid onChange={setFormValue} formValue={formValue}>
           <Modal.Body className='px-[4px]'>
             <TextField required name="key" label="Ключ статуса заказа" />
-            <TextField required name="value" label="Ключ статуса заказа" />
+            <TextField required name="value" label="Значение статуса заказа" />
 
           </Modal.Body>
           <Modal.Footer>
